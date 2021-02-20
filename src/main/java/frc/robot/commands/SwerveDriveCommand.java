@@ -51,7 +51,7 @@ public class SwerveDriveCommand extends CommandBase {
       -rotLimiter.calculate(Robot.robotContainer.getRightXboxJoystickValueX())
         * Constants.kMaxAngularSpeed;
     //right 
-    boolean fieldRelative = controller.getBumper(GenericHID.Hand.kLeft);
+    boolean fieldRelative = true; // this value is supposed to be a bool value of the right bumper
 
     drivetrain.drive(xSpeed, ySpeed, rot, fieldRelative);
   }
