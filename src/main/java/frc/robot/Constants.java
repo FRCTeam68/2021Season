@@ -1,7 +1,13 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2018-2019 FIRST. All Rights Reserved.                        */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
 package frc.robot;
 
 import edu.wpi.first.wpilibj.I2C;
-import edu.wpi.first.wpilibj.util.Units;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -39,31 +45,120 @@ public final class Constants {
     public static final int XBOX_DRIVE_POV_LEFT = 270;
     public static final int XBOX_DRIVE_POV_UP = 0;
 
-    //Swerve Module FL
-    public static final int kTalonDriveFL = 3;
-    public static final int kTalonTurnFL = 4;
-    public static final int kCanCoderFL = 11;
-    //Swerve Module FR
-    public static final int kTalonDriveFR = 7;
-    public static final int kTalonTurnFR = 8;
-    public static final int kCanCoderFR = 13;
-    //Swerve Module BL
-    public static final int kTalonDriveBL = 1;
-    public static final int kTalonTurnBL = 2;
-    public static final int kCanCoderBL = 10;
-    //Swerve Module BR
-    public static final int kTalonDriveBR = 5;
-    public static final int kTalonTurnBR = 6;
-    public static final int kCanCoderBR = 12;
-    //Swerver Constants
-    public static final double kMaxSpeed = Units.feetToMeters(13.6); // 13.6 feet per second
-    public static final double kMaxAngularSpeed = Math.PI; // 1/2 rotation per second
-    public static final double kDriveP = 15.0;
-    public static final double kDriveI = 0.01;
-    public static final double kDriveD = 0.1;
-    public static final double kDriveF = 0.2;
-  
-    public static final double kAngleP = 1.0;
-    public static final double kAngleI = 0.0;
-    public static final double kAngleD = 0.0;
+    public static final int XBOX_MANIPULATE = 1;
+
+    public static final int XBOX_MANIPULATE_X = 2;
+    public static final int XBOX_MANIPULATE_CIRCLE = 3;
+    public static final int XBOX_MANIPULATE_SQUARE = 1;
+    public static final int XBOX_MANIPULATE_TRIANGLE = 4;
+    public static final int XBOX_MANIPULATE_LY = 1; // left joystick
+    public static final int XBOX_MANIPULATE_LT = 7;
+    public static final int XBOX_MANIPULATE_RT = 8;
+    public static final int XBOX_MANIPULATE_RY = 5; // right joystick
+    public static final int XBOX_MANIPULATE_SL = 11;
+    public static final int XBOX_MANIPULATE_SR = 12;
+    public static final int XBOX_MANIPULATE_RB = 6;
+    public static final int XBOX_MANIPULATE_LB = 5;
+    public static final int XBOX_MANIPULATE_SHARE = 9;
+    public static final int XBOX_MANIPULATE_OPTIONS = 10;
+    public static final int XBOX_MANIPULATE_POV_DOWN = 180;
+    public static final int XBOX_MANIPULATE_POV_RIGHT = 90;
+    public static final int XBOX_MANIPULATE_POV_LEFT = 270;
+    public static final int XBOX_MANIPULATE_POV_UP = 0;
+
+    // pid values provided by the almight An
+    public static final double PID_F = 0.03; // 0.025
+    public static final double PID_P = .4;
+    public static final double PID_I = 0.0;
+    public static final double PID_D = 0.0;
+    //shooter velocity
+    public static final double SHOOTER_PID_F = 0.001; // 0.025
+    public static final double SHOOTER_PID_P = 0.0;
+    public static final double SHOOTER_PID_I = 0.0;
+    public static final double SHOOTER_PID_D = 0.0;
+
+
+    // drive motor values
+
+    public static final int TALONFX_FR = 11;
+    public static final int TALONFX_FL = 13;
+    public static final int TALONFX_BR = 12;
+    public static final int TALONFX_BL = 14;
+
+    // CAN ENCODER
+    public static final int CANENCODER_LEFT_DRIVE = 0;
+    public static final int CANENCODER_RIGHT_DRIVE = 0;
+
+    // Drivetrain Left PID Config
+    public static final int DRIVETRAIN_LEFT_PID_SLOT = 0;
+    public static final double DRIVETRAIN_LEFT_PID_F = 0.507;
+    public static final double DRIVETRAIN_LEFT_PID_P = 1;
+    public static final double DRIVETRAIN_LEFT_PID_I = 0;
+    public static final double DRIVETRAIN_LEFT_PID_D = 0;
+    // Drivetrain Right PID Config
+    public static final int DRIVETRAIN_RIGHT_PID_SLOT = 0;
+    public static final double DRIVETRAIN_RIGHT_PID_F = 0.507;
+    public static final double DRIVETRAIN_RIGHT_PID_P = 1;
+    public static final double DRIVETRAIN_RIGHT_PID_I = 0;
+    public static final double DRIVETRAIN_RIGHT_PID_D = 0;
+
+    public static final double DRIVETRAIN_RIGHT_SLOT = 0;
+    public static final double DRIVETRAIN_LEFT_SLOT = 0;
+
+    // auton
+    public static final double WHEEL_DIAMETER = 6; //in inches
+    public static final double MAX_SPEED = 17;
+    public static final int ENCODER_TICK_LEFT_REVOLUTION = 36950; // -24427
+    public static final int ENCODER_TICK_RIGHT_REVOLUTION = 36950; // 24508
+    public static final double AUTON_DISTANCE_KP = 5.8;// .08
+    public static final double AUTON_DISTANCE_KI = 0;
+    public static final double AUTON_DISTANCE_KD = 2;
+    public static final double AUTON_ANGLE_KP = 0;// SET THESE VALUES
+    public static final double AUTON_ANGLE_KI = 0;
+    public static final double AUTON_ANGLE_KD = 0;
+
+    // pneumatics constants
+
+    public static final int DRIVE_SHIFTER_PCM_A = 1;
+    public static final int DRIVE_SHIFTER_PCM_B = 0;
+    public static final int INTAKE_PCM_A = 2;
+    public static final int INTAKE_PCM_B = 3;
+    public static final int AIR_PUMP_CAN = 0;
+
+    // shooter subsystem
+
+    public static final int SHOOTER_WHEELSPINNER_1 = 6;
+    public static final int SHOOTER_WHEELSPINNER_2 = 2;
+    public static final int SHOOTER_ANGLE = 8;
+    public static final int SHOOTER_FEEDER = 3;
+    public static final int SHOOTER_PID_SLOT = 0;
+    public static final int SHOOTER_LIMIT_SWITCH = 0;
+    public static final double SHOOTER_ANGLE_KF = 0.08;//.02
+    public static final double SHOTOER_ANGLE_KP = .4;//.01
+    public static final double SHOOTER_MEDIUM_TICKS = -5500;
+    public static final double SHOOTER_LOW_TICKS = -10000;
+    public static final double SHOOTER_CURVE_SIDE = 1000;
+    public static final double SHOOTER_CURVE_OTHER = 200;
+    public static final double SHOOTER_LOW_SPEED_LEFT = 675;
+    public static final double SHOOTER_LOW_SPEED_RIGHT = 220;
+    public static final double SHOOTER_MEDIUM_SPEED_LEFT = -350;
+    public static final double SHOOTER_MEDIUM_SPEED_RIGHT = -450;
+    public static final double SHOOTER_FEEDER_SPEED = .5;
+
+    //endgame 20
+    public static final int ENDGAME_WINCH = 1;
+    public static final int ENDGAME_SERVO = 0;
+    
+    //Hopper subsystem
+    public static final int HOPPER_AGITATOR1 = 4;//current value unknown
+    public static final int HOPPER_AGITATOR2 = 10;//current value unknown
+
+
+    //Intake Subsystem
+    public static final int INTAKE_MOTOR = 5;
+    //spinner subsystem
+    public static final int SPINNER_MOTOR = 0;
+    //dj spinner sub
+    public static final I2C.Port i2cPort = I2C.Port.kOnboard;
+
 }
