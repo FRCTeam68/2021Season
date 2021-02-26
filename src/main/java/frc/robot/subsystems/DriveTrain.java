@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
+import java.util.function.BooleanSupplier;
 
 import frc.robot.Constants;
 import frc.robot.Robot;
@@ -47,8 +48,13 @@ public class DriveTrain extends SubsystemBase {
   NetworkTableEntry m_xEntry = NetworkTableInstance.getDefault().getTable("troubleshooting").getEntry("X");
   NetworkTableEntry m_yEntry = NetworkTableInstance.getDefault().getTable("troubleshooting").getEntry("Y");
   
+  private DriveControlMode currentControlMode = DriveControlMode.STANDARD_DRIVE;
+  private BooleanSupplier driveDisableSwitchAccess;
 
-
+  protected double maxVelocityLow;
+  protected double maxVelocityHigh;
+  protected double minVelocityLow;
+  protected double minVelocityHigh;
 // The robot's drive
 
 // The left-side drive encoder
@@ -120,6 +126,9 @@ private AHRS m_gyro = new AHRS();
     
 
   }
+
+
+
   @Override
   public void periodic() {
     CommandScheduler.getInstance().setDefaultCommand(Robot.driveTrain, new DriveWithJoysticks());
@@ -195,6 +204,21 @@ private AHRS m_gyro = new AHRS();
     return br.getSelectedSensorPosition(0);
 
   }
+  public double leftVelocity(){
+    return fl.getSelectedSensorVelocity();
+  }
+  public double rightVelocity(){
+    return fr.getSelectedSensorVelocity();
+  }
+  
+  public double getRotationsLeft() {
+    return (double) fl.getSelectedSensorPosition() / Constants.ENCODER_TICK_LEFT_REVOLUTION;
+  }
+
+    
+  public double getRotationsRight() {
+    return (double) fr.getSelectedSensorPosition() / Constants.ENCODER_TICK_RIGHT_REVOLUTION;
+  }
   public double leftVisionAdjusted(){
     double leftSpeed;
     double joystickSpeed;
@@ -213,5 +237,85 @@ private AHRS m_gyro = new AHRS();
     rightSpeed =  joystickSpeed -= visionCorrect;
     return rightSpeed;
   }
+    /**
+   * Gets the distance travelled of the right side of the drive since the last
+   * call to resetPosition.
+   * 
+   * @return Distance in inches
+   */
+  public double getDistanceRight() {
+    return Constants.WHEEL_DIAMETER * Math.PI * getRotationsRight();
+  }
 
+  /**
+   * Gets the distance travelled of the left side of the drive since the last call
+   * to resetPosition.
+   * 
+   * @return Distance in inches
+   */
+  public double getDistanceLeft() {
+    return Constants.WHEEL_DIAMETER * Math.PI * getRotationsLeft();
+  }
+  
+  public void driveOpenLoopLowLevel(double left, double right) {
+    fl.set(ControlMode.PercentOutput, left);
+    fr.set(ControlMode.PercentOutput, right);
+  }
+
+  
+  protected void driveClosedLoopLowLevel(double left, double right) {
+    fl.set(ControlMode.Velocity, left * Constants.ENCODER_TICK_LEFT_REVOLUTION / 10);
+    fr.set(ControlMode.Velocity, right * Constants.ENCODER_TICK_RIGHT_REVOLUTION / 10);
+  }
+
+  public void stop(){
+    fl.set(0);
+    fr.set(0);
+  }
+
+  private double calcActualVelocity(double input, boolean isPercentage) {
+    double minVelocity;
+    if (!Robot.pnuematics.gearMode()) {
+      minVelocity = minVelocityLow;
+    } else {
+      minVelocity = minVelocityHigh;
+    }
+    double minNonZero = 0.1;
+    if (isPercentage) {
+      minVelocity /= Constants.MAX_SPEED;
+      minNonZero = 0.001;
+    }
+    if (input > minNonZero * -1 && input < minNonZero) {
+      return 0;
+    } else if (input >= minNonZero && input < minVelocity) {
+      return minVelocity;
+    } else if (input <= minNonZero * -1 && input > minVelocity * -1) {
+      return minVelocity * -1;
+    } else {
+      return input;
+    }
+  }
+
+  public void driveInchesPerSec(double left, double right) {
+    if (currentControlMode == DriveControlMode.STANDARD_DRIVE) {
+      if (driveDisableSwitchAccess.getAsBoolean()) {
+        left = 0;
+        right = 0;
+      }
+
+      if (Constants.openLoop) {
+        driveOpenLoopLowLevel(calcActualVelocity(left, false) / Constants.MAX_SPEED,
+            calcActualVelocity(right, false) / Constants.MAX_SPEED);
+      } else {
+        driveClosedLoopLowLevel((calcActualVelocity(left, false) / (Constants.WHEEL_DIAMETER * Math.PI)),
+            (calcActualVelocity(right, false) / (Constants.WHEEL_DIAMETER * Math.PI)));
+      }
+    }
+  }
+
+
+
+  private enum DriveControlMode {
+    STANDARD_DRIVE, PTO
+  }
 }

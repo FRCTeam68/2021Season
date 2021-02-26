@@ -117,6 +117,8 @@ public final class Constants {
     public static final double AUTON_ANGLE_KI = 0;
     public static final double AUTON_ANGLE_KD = 0;
 
+    public static final boolean openLoop = true; //this inquires wheter or not the robot is in closed loop or not
+
     // pneumatics constants
 
     public static final int DRIVE_SHIFTER_PCM_A = 1;
