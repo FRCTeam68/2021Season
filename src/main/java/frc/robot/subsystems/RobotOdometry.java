@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.geometry.Translation2d;
@@ -16,7 +17,9 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.subsystems.DriveTrain;
+import edu.wpi.first.wpilibj.SPI;
 import frc.robot.util.LatencyData;
 
 public class RobotOdometry extends SubsystemBase {
@@ -40,9 +43,9 @@ public class RobotOdometry extends SubsystemBase {
    * 
    * Initial position is (0,0) and 0 degrees
    */
-  public RobotOdometry(DriveTrain driveTrain, AHRS ahrs) {
-    this.driveTrain = driveTrain;
-    this.ahrs = ahrs;
+  public RobotOdometry() {
+    this.driveTrain = Robot.driveTrain;
+    this.ahrs = new AHRS(SPI.Port.kMXP);
     driveOdometry = new DifferentialDriveOdometry(getCurrentRotation());
     resetBaseDistances();
   }

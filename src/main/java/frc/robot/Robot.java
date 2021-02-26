@@ -19,6 +19,7 @@ import frc.robot.subsystems.EndGame;
 import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Pnuematics;
+import frc.robot.subsystems.RobotOdometry;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
 import frc.robot.commands.RunAutonSequence;
@@ -54,6 +55,8 @@ public class Robot extends TimedRobot {
   public static SmartPID smartPID;
 
   public static DJSpinner djspinner;
+  
+  public static RobotOdometry robotOdemetry;
 
   SequentialCommandGroup autonomousCommand;
 
@@ -77,6 +80,7 @@ public class Robot extends TimedRobot {
     hopper = new Hopper();
     endGame = new EndGame();
     djspinner = new DJSpinner();
+    robotOdemetry = new RobotOdometry();
     /*
      * endGame = new EndGame(); hopper = new Hopper(); intake = new Intake();
      * shooter = new Shooter();
