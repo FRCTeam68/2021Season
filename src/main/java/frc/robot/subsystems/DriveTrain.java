@@ -49,7 +49,7 @@ public class DriveTrain extends SubsystemBase {
   NetworkTableEntry m_yEntry = NetworkTableInstance.getDefault().getTable("troubleshooting").getEntry("Y");
   
   private DriveControlMode currentControlMode = DriveControlMode.STANDARD_DRIVE;
-  private BooleanSupplier driveDisableSwitchAccess;
+  private Boolean driveDisableSwitchAccess;
 
   protected double maxVelocityLow;
   protected double maxVelocityHigh;
@@ -78,7 +78,7 @@ private AHRS m_gyro = new AHRS();
     // NAVX CONFIG
     m_gyro = new AHRS(SPI.Port.kMXP);
     //m_gyro.reset();
-    
+    driveDisableSwitchAccess = false;
 		
     // DriveTrain Motors Config
     fr = new WPI_TalonFX(Constants.TALONFX_FR);
@@ -298,7 +298,7 @@ private AHRS m_gyro = new AHRS();
 
   public void driveInchesPerSec(double left, double right) {
     if (currentControlMode == DriveControlMode.STANDARD_DRIVE) {
-      if (driveDisableSwitchAccess.getAsBoolean()) {
+      if (driveDisableSwitchAccess) {
         left = 0;
         right = 0;
       }

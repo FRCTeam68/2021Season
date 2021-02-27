@@ -45,13 +45,23 @@ public class NewRunMotionProfile extends CommandBase {
   private static final double kRamseteZeta = 0.7;
   private static final double maxVoltage = 10; // WPILib docs suggest less than 12 because of voltage drop
 
-  private double kS; // Volts
-  private double kV; // Volt seconds per meter
-  private double kA; // Volt seconds squared per meter
-  private double trackWidth;
-  private double maxVelocity; // m/s
-  private double maxAcceleration; // m/s^2
-  private double maxCentripetalAcceleration; // m/s^2
+  /*
+kS = 0.14;
+kV = 0.0758;
+kA = 0.0128;
+trackWidth = 24.890470780033485;
+maxVelocity = 120;
+maxAcceleration = 50;
+maxCentripetalAcceleration = 200;
+  */
+ 
+  private double kS = 0.14; // Volts
+  private double kV = 0.0758; // Volt seconds per meter 
+  private double kA = 0.0128; // Volt seconds squared per meter
+  private double trackWidth = 24.9;
+  private double maxVelocity = 120; // m/s
+  private double maxAcceleration = 50; // m/s^2
+  private double maxCentripetalAcceleration = 200; // m/s^2
 
   private DriveTrain driveTrain;
   private RobotOdometry odometry;

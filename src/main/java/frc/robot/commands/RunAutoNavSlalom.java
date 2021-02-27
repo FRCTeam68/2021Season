@@ -19,6 +19,7 @@ import frc.robot.commands.NewRunMotionProfile.CirclePath;
 import frc.robot.Constants;
 //import frc.robot.Constants.RobotType;
 import frc.robot.subsystems.RobotOdometry;
+import frckit.tools.pathview.TrajectoryMarker;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -31,6 +32,7 @@ public class RunAutoNavSlalom extends SequentialCommandGroup {
 
   /** Creates a new RunAutoNavSlalom. */
   public RunAutoNavSlalom(RobotOdometry odometry, DriveTrain driveTrain) {
+      System.out.println("Attempting to start auton"); // auton actually starts so theres a differing issue
     mp = new NewRunMotionProfile(driveTrain, odometry, 0.0,
         List.of(new Pose2d(30.0, 30.0, new Rotation2d()), new Pose2d(90.0, 60.0, Rotation2d.fromDegrees(45.0)),
             new Pose2d(180.0, 90.0, new Rotation2d()),
@@ -40,14 +42,16 @@ public class RunAutoNavSlalom extends SequentialCommandGroup {
             new Pose2d(90.0, 60.0, Rotation2d.fromDegrees(90.0 + 45.0)),
             new Pose2d(60.0, 90.0, Rotation2d.fromDegrees(90.0 + 45.0))),
         Double.MAX_VALUE, false, false);
+
+        System.out.println(odometry.getCurrentPose());
     // Add your addCommands(new FooCommand(), new BarCommand());
     addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(30, 30, new Rotation2d()))), mp,
         new InstantCommand(() -> driveTrain.stop()));
   }
 
-  /*
+  
   public static void main(String[] args) {
-    Constants.setRobot(RobotType.ROBOT_2020);
+    //Constants.setRobot(RobotType.ROBOT_2020);
     RunAutoNavSlalom cmd = new RunAutoNavSlalom(null, null);
     cmd.mp.visualize(80,
         List.of(new TrajectoryMarker(new Translation2d(30, 120), markerDiameter, markerColor),
@@ -60,5 +64,5 @@ public class RunAutoNavSlalom extends SequentialCommandGroup {
             new TrajectoryMarker(new Translation2d(210, 60), markerDiameter, markerColor),
             new TrajectoryMarker(new Translation2d(240, 60), markerDiameter, markerColor),
             new TrajectoryMarker(new Translation2d(300, 60), markerDiameter, markerColor)));
-  }*/
+  }
 }
