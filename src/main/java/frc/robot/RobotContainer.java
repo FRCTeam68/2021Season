@@ -22,7 +22,7 @@ import frc.robot.commands.Zero;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.RunAutoNavSlalom;
+import frc.robot.commands.RunAutonStraightMeter;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -60,7 +60,7 @@ public class RobotContainer {
     return robotContainer;
   }
   public Command getAutonomousCommand() {
-    return new RunAutoNavSlalom(Robot.robotOdemetry, Robot.driveTrain);
+    return new RunAutonStraightMeter(Robot.robotOdemetry, Robot.driveTrain);
   }
   public RobotContainer() {
     // Configure the button bindings

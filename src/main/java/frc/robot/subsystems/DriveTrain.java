@@ -14,6 +14,7 @@ import java.util.function.BooleanSupplier;
 import frc.robot.Constants;
 import frc.robot.Robot;
 import frc.robot.commands.DriveWithJoysticks;
+//import jdk.vm.ci.meta.Constant;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -25,6 +26,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 //import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
@@ -78,7 +80,7 @@ private AHRS m_gyro = new AHRS();
     // NAVX CONFIG
     m_gyro = new AHRS(SPI.Port.kMXP);
     //m_gyro.reset();
-    driveDisableSwitchAccess = false;
+    driveDisableSwitchAccess = false; //false || it attempted to run im fairly certain this has to be set to false so it falls into close loop
 		
     // DriveTrain Motors Config
     fr = new WPI_TalonFX(Constants.TALONFX_FR);
@@ -90,11 +92,12 @@ private AHRS m_gyro = new AHRS();
     leftDriveEnc = new CANCoder(Constants.CANENCODER_LEFT_DRIVE);
     RightDriveEnc = new CANCoder(Constants.CANENCODER_RIGHT_DRIVE);
     */
-    br.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,0,0);
-    br.selectProfileSlot(Constants.DRIVETRAIN_RIGHT_PID_SLOT, 0);
-    br.setSensorPhase(true);
-    br.setInverted(true);
+    fr.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,0,0);
+    fr.selectProfileSlot(Constants.DRIVETRAIN_RIGHT_PID_SLOT, 0);
+    fr.setSensorPhase(true);
+    
     fr.setInverted(true);
+    br.setInverted(true);
 
     fl.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,0,0);
     fl.selectProfileSlot(Constants.DRIVETRAIN_LEFT_PID_SLOT, 0);
@@ -103,8 +106,17 @@ private AHRS m_gyro = new AHRS();
     
 
     bl.set(ControlMode.Follower, fl.getDeviceID());
-    fr.set(ControlMode.Follower, br.getDeviceID());
+    br.set(ControlMode.Follower, fr.getDeviceID());
 
+    fr.config_kP(Constants.DRIVETRAIN_RIGHT_PID_SLOT, Constants.DRIVETRAIN_RIGHT_PID_P);
+    fr.config_kI(Constants.DRIVETRAIN_RIGHT_PID_SLOT, Constants.DRIVETRAIN_RIGHT_PID_I);
+    fr.config_kD(Constants.DRIVETRAIN_RIGHT_PID_SLOT, Constants.DRIVETRAIN_RIGHT_PID_D);
+    fr.config_kF(Constants.DRIVETRAIN_RIGHT_PID_SLOT, Constants.DRIVETRAIN_RIGHT_PID_F);
+
+    fl.config_kP(Constants.DRIVETRAIN_RIGHT_PID_SLOT, Constants.DRIVETRAIN_RIGHT_PID_P);
+    fl.config_kI(Constants.DRIVETRAIN_RIGHT_PID_SLOT, Constants.DRIVETRAIN_RIGHT_PID_I);
+    fl.config_kD(Constants.DRIVETRAIN_RIGHT_PID_SLOT, Constants.DRIVETRAIN_RIGHT_PID_D);
+    fl.config_kF(Constants.DRIVETRAIN_RIGHT_PID_SLOT, Constants.DRIVETRAIN_RIGHT_PID_F);
 
     fr.setNeutralMode(NeutralMode.Brake);
     br.setNeutralMode(NeutralMode.Brake);
@@ -140,12 +152,14 @@ private AHRS m_gyro = new AHRS();
 
     
     //SmartDashboard.putNumber("m_xEntry", m_xEntry);
+    SmartDashboard.putNumber("kS", fl.getMotorOutputVoltage());
+    //SmartDashboard.putNumber("kV", fl.getMotor)
   }
 
   public void setSpeedFalcon(double left, double right){
     
     fl.set(ControlMode.PercentOutput,left);
-    br.set(ControlMode.PercentOutput,right);
+    fr.set(ControlMode.PercentOutput,right);
     
   }
   public void setSpeedAuto(double left, double right){
@@ -165,7 +179,7 @@ private AHRS m_gyro = new AHRS();
    */
   public void ResetEncoders(){
     fl.setSelectedSensorPosition(0,0,0);
-    br.setSelectedSensorPosition(0,0,0);
+    fr.setSelectedSensorPosition(0,0,0);
     
         /*m_gyro.reset(); for auton experimental we may have to reset thee navx to re run a new path */
   }
@@ -201,7 +215,7 @@ private AHRS m_gyro = new AHRS();
     return fl.getSelectedSensorPosition(0);
   }
   public double getRightEnc(){
-    return br.getSelectedSensorPosition(0);
+    return fr.getSelectedSensorPosition(0);
 
   }
   public double leftVelocity(){
@@ -263,7 +277,7 @@ private AHRS m_gyro = new AHRS();
   }
 
   
-  protected void driveClosedLoopLowLevel(double left, double right) {
+  public void driveClosedLoopLowLevel(double left, double right) {
     fl.set(ControlMode.Velocity, left * Constants.ENCODER_TICK_LEFT_REVOLUTION / 10);
     fr.set(ControlMode.Velocity, right * Constants.ENCODER_TICK_RIGHT_REVOLUTION / 10);
   }

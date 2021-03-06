@@ -91,14 +91,14 @@ public final class Constants {
 
     // Drivetrain Left PID Config
     public static final int DRIVETRAIN_LEFT_PID_SLOT = 0;
-    public static final double DRIVETRAIN_LEFT_PID_F = 0.507;
-    public static final double DRIVETRAIN_LEFT_PID_P = 1;
+    public static final double DRIVETRAIN_LEFT_PID_F = 0.23;
+    public static final double DRIVETRAIN_LEFT_PID_P = 0.80;
     public static final double DRIVETRAIN_LEFT_PID_I = 0;
-    public static final double DRIVETRAIN_LEFT_PID_D = 0;
+    public static final double DRIVETRAIN_LEFT_PID_D = 30;
     // Drivetrain Right PID Config
     public static final int DRIVETRAIN_RIGHT_PID_SLOT = 0;
-    public static final double DRIVETRAIN_RIGHT_PID_F = 0.507;
-    public static final double DRIVETRAIN_RIGHT_PID_P = 1;
+    public static final double DRIVETRAIN_RIGHT_PID_F = 0.00;
+    public static final double DRIVETRAIN_RIGHT_PID_P = 0.1;
     public static final double DRIVETRAIN_RIGHT_PID_I = 0;
     public static final double DRIVETRAIN_RIGHT_PID_D = 0;
 

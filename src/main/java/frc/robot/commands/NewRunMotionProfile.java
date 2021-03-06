@@ -10,6 +10,8 @@ package frc.robot.commands;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
@@ -41,27 +43,36 @@ import frckit.util.GeomUtil;
 
 public class NewRunMotionProfile extends CommandBase {
 
-  private static final double kRamseteB = 2; // 0.05 seems to be equivalent to the recommendation for meters
-  private static final double kRamseteZeta = 0.7;
+  private static final double kRamseteB = .05; // 0.05 seems to be equivalent to the recommendation for meters
+  private static final double kRamseteZeta = .7;
   private static final double maxVoltage = 10; // WPILib docs suggest less than 12 because of voltage drop
 
-  /*
+  /*`
 kS = 0.14;
 kV = 0.0758;
 kA = 0.0128;
 trackWidth = 24.890470780033485;
+
 maxVelocity = 120;
 maxAcceleration = 50;
 maxCentripetalAcceleration = 200;
+
+        kS = 1.21;
+        kV = 0.0591;
+        kA = 0.0182;
+        trackWidth = 27.5932064868814;
+        maxVelocity = 150;
+        maxAcceleration = 50;
+        maxCentripetalAcceleration = 200;
   */
- 
-  private double kS = 0.14; // Volts
-  private double kV = 0.0758; // Volt seconds per meter 
-  private double kA = 0.0128; // Volt seconds squared per meter
-  private double trackWidth = 24.9;
-  private double maxVelocity = 120; // m/s
-  private double maxAcceleration = 50; // m/s^2
-  private double maxCentripetalAcceleration = 200; // m/s^2
+  
+  private double kS = 1.06; // Volts
+  private double kV = 0.0591; // Volt seconds per meter 
+  private double kA = 0.0182; // Volt seconds squared per meter
+  private double trackWidth = 23.7;
+  private double maxVelocity = 17;// m/s
+  private double maxAcceleration = .4; // m/s^2
+  private double maxCentripetalAcceleration = .16; // m/s^2
 
   private DriveTrain driveTrain;
   private RobotOdometry odometry;
