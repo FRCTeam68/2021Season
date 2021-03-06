@@ -43,36 +43,17 @@ import frckit.util.GeomUtil;
 
 public class NewRunMotionProfile extends CommandBase {
 
-  private static final double kRamseteB = .05; // 0.05 seems to be equivalent to the recommendation for meters
+  private static final double kRamseteB = 2; // 0.05 seems to be equivalent to the recommendation for meters
   private static final double kRamseteZeta = .7;
   private static final double maxVoltage = 10; // WPILib docs suggest less than 12 because of voltage drop
 
-  /*`
-kS = 0.14;
-kV = 0.0758;
-kA = 0.0128;
-trackWidth = 24.890470780033485;
-
-maxVelocity = 120;
-maxAcceleration = 50;
-maxCentripetalAcceleration = 200;
-
-        kS = 1.21;
-        kV = 0.0591;
-        kA = 0.0182;
-        trackWidth = 27.5932064868814;
-        maxVelocity = 150;
-        maxAcceleration = 50;
-        maxCentripetalAcceleration = 200;
-  */
-  
-  private double kS = 1.06; // Volts
-  private double kV = 0.0591; // Volt seconds per meter 
-  private double kA = 0.0182; // Volt seconds squared per meter
-  private double trackWidth = 23.7;
-  private double maxVelocity = 17;// m/s
-  private double maxAcceleration = .4; // m/s^2
-  private double maxCentripetalAcceleration = .16; // m/s^2
+  private double kS = .121; // Volts
+  private double kV = 0.0791; // Volt seconds per meter 
+  private double kA = 0.00382; // Volt seconds squared per meter
+  private double trackWidth = 23.7; 
+  private double maxVelocity = 50;// m/s
+  private double maxAcceleration = 25; // m/s^2
+  private double maxCentripetalAcceleration = 20; // m/s^2
 
   private DriveTrain driveTrain;
   private RobotOdometry odometry;
@@ -113,7 +94,7 @@ maxCentripetalAcceleration = 200;
   public NewRunMotionProfile(DriveTrain driveTrain, RobotOdometry odometry, double initialVelocity,
       List<Object> waypointData, double endVelocity, boolean reversed, boolean relative,
       List<TrajectoryConstraint> extraConstraints) {
-    //updateConstants();
+    updateConstants();
     this.waypointPoses = processWaypointData(waypointData, reversed);
     Pose2d initialPosition = this.waypointPoses.remove(0);
     useQuintic = true;
@@ -170,7 +151,7 @@ maxCentripetalAcceleration = 200;
     // The setup function's relative trajectory handling is unneccessary with a
     // defined start point so always pass false and do the other neccessary logic
     // here
-    //updateConstants();
+    updateConstants();
     setup(driveTrain, odometry, convertTranslationListToMeters(intermediatePoints),
         GeomUtil.inchesToMeters(endPosition), Units.inchesToMeters(endVelocity), reversed, false, extraConstraints);
     dynamicTrajectory = false;
@@ -292,40 +273,11 @@ maxCentripetalAcceleration = 200;
   /**
    * Updates constants based on current robot
    */
-  /*
+  
   @SuppressWarnings("incomplete-switch")
   private void updateConstants() {
 
     // All constants defined in inches
-    switch (Constants.getRobot()) {
-      case ROBOT_2019:
-        kS = 1.21;
-        kV = 0.0591;
-        kA = 0.0182;
-        trackWidth = 27.5932064868814;
-        maxVelocity = 150;
-        maxAcceleration = 50;
-        maxCentripetalAcceleration = 200;
-        break;
-      case ROBOT_2020_DRIVE:
-        kS = 0.14;
-        kV = 0.0758;
-        kA = 0.0128;
-        trackWidth = 24.890470780033485;
-        maxVelocity = 120;
-        maxAcceleration = 50;
-        maxCentripetalAcceleration = 200;
-        break;
-      case ROBOT_2020:
-        kS = 0.124;
-        kV = 0.0722;
-        kA = 0.00475;
-        trackWidth = 25.934;
-        maxVelocity = 130;
-        maxAcceleration = 130;
-        maxCentripetalAcceleration = 120;
-        break;
-    }
 
     // Convert to meters
     kV = Units.metersToInches(kV);
@@ -337,7 +289,7 @@ maxCentripetalAcceleration = 200;
   }
 
   /**
-   * Sets up a new RunMotionProfile that starts from the robot's current position,
+   * Sets up a new RunMotionProfile that starts from the robot's current position,u
    * using a cubic spline.
    * 
    * @param driveTrain         The drive train

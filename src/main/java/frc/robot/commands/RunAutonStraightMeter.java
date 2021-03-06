@@ -34,20 +34,20 @@ public class RunAutonStraightMeter extends SequentialCommandGroup {
   public RunAutonStraightMeter(RobotOdometry odometry, DriveTrain driveTrain) {
       System.out.println("Attempting to start auton"); // auton actually starts so theres a differing issue
     mp = new NewRunMotionProfile(driveTrain, odometry, 0.0,
-        List.of(new Pose2d(30.0, 30.0, new Rotation2d()), new Pose2d(40.0, 30.0, Rotation2d.fromDegrees(0))),
+        List.of(new Pose2d(0, 0, new Rotation2d()), new Pose2d(40.0, 0, Rotation2d.fromDegrees(0))),
         Double.MAX_VALUE, false, false);
 
-        System.out.println(odometry.getCurrentPose());
+        //System.out.println(odometry.getCurrentPose());
     // Add your addCommands(new FooCommand(), new BarCommand());
     addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(30, 30, new Rotation2d()))), mp,
         new InstantCommand(() -> driveTrain.stop()));
   }
 
   
-  /*
+  
   public static void main(String[] args) {
     //Constants.setRobot(RobotType.ROBOT_2020);
-    RunAutoNavSlalom cmd = new RunAutoNavSlalom(null, null);
+    RunAutonStraightMeter cmd = new RunAutonStraightMeter(null, null);
     cmd.mp.visualize(80,
         List.of(new TrajectoryMarker(new Translation2d(30, 120), markerDiameter, markerColor),
             new TrajectoryMarker(new Translation2d(60, 120), markerDiameter, markerColor),
@@ -60,5 +60,5 @@ public class RunAutonStraightMeter extends SequentialCommandGroup {
             new TrajectoryMarker(new Translation2d(240, 60), markerDiameter, markerColor),
             new TrajectoryMarker(new Translation2d(300, 60), markerDiameter, markerColor)));
   }
-  */
+  
 }

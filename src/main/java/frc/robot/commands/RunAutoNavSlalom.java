@@ -34,6 +34,18 @@ public class RunAutoNavSlalom extends SequentialCommandGroup {
   public RunAutoNavSlalom(RobotOdometry odometry, DriveTrain driveTrain) {
       System.out.println("Attempting to start auton"); // auton actually starts so theres a differing issue
     mp = new NewRunMotionProfile(driveTrain, odometry, 0.0,
+        List.of(new Pose2d(30.0, 30.0, new Rotation2d()), new Pose2d(120.0, 90.0, Rotation2d.fromDegrees(0.0))),
+        Double.MAX_VALUE, false, false);
+
+      //  System.out.println(odometry.getCurrentPose());
+    // Add your addCommands(new FooCommand(), new BarCommand());
+    addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(30, 30, new Rotation2d()))), mp,
+        new InstantCommand(() -> driveTrain.stop()));
+  }
+  /*
+  public RunAutoNavSlalom(RobotOdometry odometry, DriveTrain driveTrain) {
+      System.out.println("Attempting to start auton"); // auton actually starts so theres a differing issue
+    mp = new NewRunMotionProfile(driveTrain, odometry, 0.0,
         List.of(new Pose2d(30.0, 30.0, new Rotation2d()), new Pose2d(90.0, 60.0, Rotation2d.fromDegrees(45.0)),
             new Pose2d(180.0, 90.0, new Rotation2d()),
             new CirclePath(new Translation2d(300, 60), 30, Rotation2d.fromDegrees(-160), Rotation2d.fromDegrees(160),
@@ -48,6 +60,7 @@ public class RunAutoNavSlalom extends SequentialCommandGroup {
     addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(30, 30, new Rotation2d()))), mp,
         new InstantCommand(() -> driveTrain.stop()));
   }
+  */
 
   
   public static void main(String[] args) {

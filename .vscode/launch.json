@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch RunAutonStraightMeter",
+      "request": "launch",
+      "mainClass": "frc.robot.commands.RunAutonStraightMeter",
+      "projectName": "2021Season-4"
+    },
+    {
+      "type": "java",
       "name": "Launch RunAutoNavSlalom",
       "request": "launch",
       "mainClass": "frc.robot.commands.RunAutoNavSlalom",
