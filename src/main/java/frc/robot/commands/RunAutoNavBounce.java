@@ -38,7 +38,7 @@ public class RunAutoNavBounce extends SequentialCommandGroup {
   private static final Color markerColorEnd = Color.RED;
 
   /** Creates a new RunAutoNavBounce. */
-  /*
+  
   public RunAutoNavBounce(RobotOdometry odometry, DriveTrain driveTrain, Intake intake) {
     mp1 = new NewRunMotionProfile(driveTrain, odometry, 0,
         List.of(new Pose2d(30, 90, new Rotation2d()), new Pose2d(90, 140, Rotation2d.fromDegrees(90))), 0, false,
@@ -57,11 +57,11 @@ public class RunAutoNavBounce extends SequentialCommandGroup {
         Double.MAX_VALUE, true, false);
     // Add your addCommands(new FooCommand(), new BarCommand());
     addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(30, 90, new Rotation2d()))),
-        new InstantCommand(() -> intake.extend()), mp1, mp2, mp3, mp4, new InstantCommand(() -> driveTrain.stop()));
+         mp1, mp2, mp3, mp4, new InstantCommand(() -> driveTrain.stop()));
   }
-/*
+
   public static void main(String[] args) {
-    Constants.setRobot(RobotType.ROBOT_2020);
+  //  Constants.setRobot(RobotType.ROBOT_2020);
     RunAutoNavBounce cmd = new RunAutoNavBounce(null, null, null);
     cmd.mp2.visualize(80,
         List.of(new TrajectoryMarker(new Translation2d(90, 150), markerDiameterCrates, markerColorCrates),
@@ -84,6 +84,6 @@ public class RunAutoNavBounce extends SequentialCommandGroup {
             new TrajectoryMarker(new Translation2d(300, 60), markerDiameter, markerColorEnd),
             new TrajectoryMarker(new Translation2d(330, 60), markerDiameter, markerColorEnd),
             new TrajectoryMarker(new Translation2d(90, 30), markerDiameter, markerColorMain)));
-            */
-  //}
+            
+  }
 }

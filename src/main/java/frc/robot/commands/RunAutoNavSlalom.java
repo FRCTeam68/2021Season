@@ -31,17 +31,20 @@ public class RunAutoNavSlalom extends SequentialCommandGroup {
   private static final Color markerColor = Color.BLACK;
 
   /** Creates a new RunAutoNavSlalom. */
+  
   public RunAutoNavSlalom(RobotOdometry odometry, DriveTrain driveTrain) {
       System.out.println("Attempting to start auton"); // auton actually starts so theres a differing issue
     mp = new NewRunMotionProfile(driveTrain, odometry, 0.0,
-        List.of(new Pose2d(30.0, 30.0, new Rotation2d()), new Pose2d(120.0, 90.0, Rotation2d.fromDegrees(0.0))),
+        List.of(new Pose2d(0.0, 0.0, new Rotation2d()), new Pose2d(120, 0.0, Rotation2d.fromDegrees(0.0))),
         Double.MAX_VALUE, false, false);
 
       //  System.out.println(odometry.getCurrentPose());
     // Add your addCommands(new FooCommand(), new BarCommand());
-    addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(30, 30, new Rotation2d()))), mp,
+    addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(0, 0, new Rotation2d()))), mp,
         new InstantCommand(() -> driveTrain.stop()));
   }
+  
+  //  /*
   /*
   public RunAutoNavSlalom(RobotOdometry odometry, DriveTrain driveTrain) {
       System.out.println("Attempting to start auton"); // auton actually starts so theres a differing issue
@@ -55,7 +58,7 @@ public class RunAutoNavSlalom extends SequentialCommandGroup {
             new Pose2d(60.0, 90.0, Rotation2d.fromDegrees(90.0 + 45.0))),
         Double.MAX_VALUE, false, false);
 
-        System.out.println(odometry.getCurrentPose());
+    //    System.out.println(odometry.getCurrentPose());
     // Add your addCommands(new FooCommand(), new BarCommand());
     addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(30, 30, new Rotation2d()))), mp,
         new InstantCommand(() -> driveTrain.stop()));

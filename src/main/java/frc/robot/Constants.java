@@ -96,11 +96,13 @@ public final class Constants {
     public static final double DRIVETRAIN_LEFT_PID_I = 0;
     public static final double DRIVETRAIN_LEFT_PID_D = 30;
     // Drivetrain Right PID Config
+
+
     public static final int DRIVETRAIN_RIGHT_PID_SLOT = 0;
-    public static final double DRIVETRAIN_RIGHT_PID_F = 0.23;
-    public static final double DRIVETRAIN_RIGHT_PID_P = 0.00;
+    public static final double DRIVETRAIN_RIGHT_PID_F = 0.00;
+    public static final double DRIVETRAIN_RIGHT_PID_P = 0;
     public static final double DRIVETRAIN_RIGHT_PID_I = 0.00;
-    public static final double DRIVETRAIN_RIGHT_PID_D = 0;
+    public static final double DRIVETRAIN_RIGHT_PID_D = 0.00;
 
     public static final double DRIVETRAIN_RIGHT_SLOT = 0;
     public static final double DRIVETRAIN_LEFT_SLOT = 0;
@@ -108,11 +110,13 @@ public final class Constants {
     // auton
     public static final double WHEEL_DIAMETER = 6; //in inches
     public static final double MAX_SPEED = 17;
-    public static final int ENCODER_TICK_LEFT_REVOLUTION = 36950; // -24427
-    public static final int ENCODER_TICK_RIGHT_REVOLUTION = 36950; // 24508
+    public static final int ENCODER_TICK_LEFT_REVOLUTION = 20000; // -24427
+    public static final int ENCODER_TICK_RIGHT_REVOLUTION = 20000; // 24508
+    
     public static final double AUTON_DISTANCE_KP = 5.8;// .08
     public static final double AUTON_DISTANCE_KI = 0;
     public static final double AUTON_DISTANCE_KD = 2;
+
     public static final double AUTON_ANGLE_KP = 0;// SET THESE VALUES
     public static final double AUTON_ANGLE_KI = 0;
     public static final double AUTON_ANGLE_KD = 0;

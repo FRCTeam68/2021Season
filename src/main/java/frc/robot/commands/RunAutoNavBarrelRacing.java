@@ -20,6 +20,7 @@ import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 //import frc.robot.Constants.RobotType;
 import frc.robot.subsystems.RobotOdometry;
+import frckit.tools.pathview.TrajectoryMarker;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -45,8 +46,8 @@ public class RunAutoNavBarrelRacing extends SequentialCommandGroup {
     addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(30, 90, new Rotation2d()))), mp,
         new InstantCommand(() -> driveTrain.stop()));
   }
-/*  public static void main(String[] args) {
-    Constants.setRobot(RobotType.ROBOT_2020);
+  public static void main(String[] args) {
+    //Constants.setRobot(RobotType.ROBOT_2020);
     RunAutoNavBarrelRacing cmd = new RunAutoNavBarrelRacing(null, null);
     cmd.mp.visualize(80,
         List.of(new TrajectoryMarker(new Translation2d(30, 120), markerDiameter, markerColorStart),
@@ -56,5 +57,5 @@ public class RunAutoNavBarrelRacing extends SequentialCommandGroup {
             new TrajectoryMarker(new Translation2d(150, 60), markerDiameter, markerColorMain),
             new TrajectoryMarker(new Translation2d(240, 120), markerDiameter, markerColorMain),
             new TrajectoryMarker(new Translation2d(300, 60), markerDiameter, markerColorMain)));
-  }*/
+  }
 }

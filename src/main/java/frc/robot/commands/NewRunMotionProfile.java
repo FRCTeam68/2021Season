@@ -45,15 +45,15 @@ public class NewRunMotionProfile extends CommandBase {
 
   private static final double kRamseteB = 2; // 0.05 seems to be equivalent to the recommendation for meters
   private static final double kRamseteZeta = .7;
-  private static final double maxVoltage = 10; // WPILib docs suggest less than 12 because of voltage drop
+  private static final double maxVoltage = 10; // WPILib docs suggest less than 12 because of voltage dropp
 
-  private double kS = .121; // Volts
-  private double kV = 0.0791; // Volt seconds per meter 
-  private double kA = 0.00382; // Volt seconds squared per meter
+  private double kS = .124; // Volts
+  private double kV = 0.0722; // Volt seconds per meter 
+  private double kA = 0.00475; // Volt seconds squared per meter
   private double trackWidth = 23.7; 
-  private double maxVelocity = 50;// m/s
-  private double maxAcceleration = 25; // m/s^2
-  private double maxCentripetalAcceleration = 20; // m/s^2
+  private double maxVelocity = 150;// /s
+  private double maxAcceleration = 150; // /s^2
+  private double maxCentripetalAcceleration = 20; // /s^2
 
   private DriveTrain driveTrain;
   private RobotOdometry odometry;
@@ -200,7 +200,7 @@ public class NewRunMotionProfile extends CommandBase {
    */
   public NewRunMotionProfile(DriveTrain driveTrain, RobotOdometry odometry, List<Object> waypointData,
       double endVelocity, boolean reversed, boolean relative, List<TrajectoryConstraint> extraConstraints) {
-   // updateConstants();
+    updateConstants();
     this.waypointPoses = processWaypointData(waypointData, reversed);
     useQuintic = true;
     setup(driveTrain, odometry, null, null, Units.inchesToMeters(endVelocity), reversed, relative, extraConstraints);
@@ -244,7 +244,7 @@ public class NewRunMotionProfile extends CommandBase {
   public NewRunMotionProfile(DriveTrain driveTrain, RobotOdometry odometry, List<Translation2d> intermediatePoints,
       Pose2d endPosition, double endVelocity, boolean reversed, boolean relative,
       List<TrajectoryConstraint> extraConstraints) {
-    //updateConstants();
+    updateConstants();
     setup(driveTrain, odometry, convertTranslationListToMeters(intermediatePoints),
         GeomUtil.inchesToMeters(endPosition), Units.inchesToMeters(endVelocity), reversed, relative, extraConstraints);
   }
