@@ -44,15 +44,15 @@ import frckit.util.GeomUtil;
 public class NewRunMotionProfile extends CommandBase {
 
   private static final double kRamseteB = 2; // 0.05 seems to be equivalent to the recommendation for meters
-  private static final double kRamseteZeta = .7;
+  private static final double kRamseteZeta = .7; // loosey goosey value
   private static final double maxVoltage = 10; // WPILib docs suggest less than 12 because of voltage dropp
 
-  private double kS = .124; // Volts
-  private double kV = 0.0722; // Volt seconds per meter 
-  private double kA = 0.00475; // Volt seconds squared per meter
-  private double trackWidth = 23.7; 
-  private double maxVelocity = 150;// /s
-  private double maxAcceleration = 150; // /s^2
+  private double kS = 0.602; // Volts
+  private double kV = 0.115; // Volt seconds per meter 
+  private double kA = 0.0081; // Volt seconds squared per meter
+  private double trackWidth = 22.11;//21.877 
+  private double maxVelocity = 100;// /s
+  private double maxAcceleration = 100; // /s^2
   private double maxCentripetalAcceleration = 20; // /s^2
 
   private DriveTrain driveTrain;

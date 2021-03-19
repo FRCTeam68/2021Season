@@ -100,7 +100,7 @@ private AHRS m_gyro = new AHRS();
     br.setInverted(true);
 
     fl.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor,0,0);
-    fl.selectProfileSlot(Constants.DRIVETRAIN_LEFT_PID_SLOT, 0);
+    fl.selectProfileSlot(Constants.DRIVETRAIN_RIGHT_PID_SLOT, 0);
     fl.setSensorPhase(false);
     //fl.setInverted(true);
     
@@ -150,10 +150,14 @@ private AHRS m_gyro = new AHRS();
     m_xEntry.setNumber(translation.getX());
     m_yEntry.setNumber(translation.getY());
 
+    SmartDashboard.putNumber("Left Encoder Drive", getLeftEnc());
+    SmartDashboard.putNumber("Right Encoder Drive", getRightEnc());
     
     //SmartDashboard.putNumber("m_xEntry", m_xEntry);
     SmartDashboard.putNumber("kS", fl.getMotorOutputVoltage());
     //SmartDashboard.putNumber("kV", fl.getMotor)
+    SmartDashboard.putNumber("DISTANCE TRAVELED",Robot.driveTrain.getLeftEnc()/(Constants.ENCODER_TICK_LEFT_REVOLUTION/(3.14159*Constants.WHEEL_DIAMETER/12)) + Robot.driveTrain.getRightEnc()/Constants.ENCODER_TICK_RIGHT_REVOLUTION/(3.14159*Constants.WHEEL_DIAMETER/12) / 2.0);
+
   }
 
   public void setSpeedFalcon(double left, double right){

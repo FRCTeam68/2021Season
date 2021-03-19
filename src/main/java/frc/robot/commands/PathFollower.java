@@ -54,7 +54,6 @@ public class PathFollower extends HelixFollower  {
     public double getCurrentDistance() {
         // Here we need to return the overall robot distance traveled in FEET in this example we are averaging 
         // the two sides of the DriveTrain to give is the robot's distance travelled
-        //SmartDashboard.putNumber("DISTANCE TRAVELED", (Robot.driveTrain.getLeftEnc()/Constants.ENCODER_TICK_LEFT_REVOLUTION + Robot.driveTrain.getRightEnc()/Constants.ENCODER_TICK_RIGHT_REVOLUTION) / 2.0);
         return (Robot.driveTrain.getLeftEnc()/(Constants.ENCODER_TICK_LEFT_REVOLUTION/(3.14159*Constants.WHEEL_DIAMETER/12)) + Robot.driveTrain.getRightEnc()/Constants.ENCODER_TICK_RIGHT_REVOLUTION/(3.14159*Constants.WHEEL_DIAMETER/12)) / 2.0;
     }
 

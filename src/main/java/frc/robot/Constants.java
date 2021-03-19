@@ -89,20 +89,15 @@ public final class Constants {
     public static final int CANENCODER_LEFT_DRIVE = 0;
     public static final int CANENCODER_RIGHT_DRIVE = 0;
 
-    // Drivetrain Left PID Config
-    public static final int DRIVETRAIN_LEFT_PID_SLOT = 0;
-    public static final double DRIVETRAIN_LEFT_PID_F = 0.23;
-    public static final double DRIVETRAIN_LEFT_PID_P = 0.80;
-    public static final double DRIVETRAIN_LEFT_PID_I = 0;
-    public static final double DRIVETRAIN_LEFT_PID_D = 30;
+    
     // Drivetrain Right PID Config
 
 
     public static final int DRIVETRAIN_RIGHT_PID_SLOT = 0;
-    public static final double DRIVETRAIN_RIGHT_PID_F = 0.00;
-    public static final double DRIVETRAIN_RIGHT_PID_P = 0;
+    public static final double DRIVETRAIN_RIGHT_PID_F = 0.05;//.45
+    public static final double DRIVETRAIN_RIGHT_PID_P = 0.00;//.815
     public static final double DRIVETRAIN_RIGHT_PID_I = 0.00;
-    public static final double DRIVETRAIN_RIGHT_PID_D = 0.00;
+    public static final double DRIVETRAIN_RIGHT_PID_D = 0.000; //0.1
 
     public static final double DRIVETRAIN_RIGHT_SLOT = 0;
     public static final double DRIVETRAIN_LEFT_SLOT = 0;
@@ -110,12 +105,12 @@ public final class Constants {
     // auton
     public static final double WHEEL_DIAMETER = 6; //in inches
     public static final double MAX_SPEED = 17;
-    public static final int ENCODER_TICK_LEFT_REVOLUTION = 20000; // -24427
-    public static final int ENCODER_TICK_RIGHT_REVOLUTION = 20000; // 24508
+    public static final int ENCODER_TICK_LEFT_REVOLUTION = 64834; // -24427      
+    public static final int ENCODER_TICK_RIGHT_REVOLUTION = 64834; // 24508
     
-    public static final double AUTON_DISTANCE_KP = 5.8;// .08
+    public static final double AUTON_DISTANCE_KP = 0.346;// .08
     public static final double AUTON_DISTANCE_KI = 0;
-    public static final double AUTON_DISTANCE_KD = 2;
+    public static final double AUTON_DISTANCE_KD = 0;
 
     public static final double AUTON_ANGLE_KP = 0;// SET THESE VALUES
     public static final double AUTON_ANGLE_KI = 0;
@@ -126,7 +121,7 @@ public final class Constants {
     // pneumatics constants
 
     public static final int DRIVE_SHIFTER_PCM_A = 1;
-    public static final int DRIVE_SHIFTER_PCM_B = 0;
+    public static final int DRIVE_SHIFTER_PCM_B = 5;
     public static final int INTAKE_PCM_A = 2;
     public static final int INTAKE_PCM_B = 3;
     public static final int AIR_PUMP_CAN = 0;

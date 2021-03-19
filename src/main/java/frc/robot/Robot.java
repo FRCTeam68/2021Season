@@ -132,6 +132,9 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
 
     driveTrain.ResetEncoders();
+    driveTrain.resetYaw();
+    pnuematics.setShifterHigh();
+
     autonomousCommand = m_robotContainer.getAutonomousCommand();
     if (autonomousCommand != null) {
       autonomousCommand.schedule();
