@@ -13,6 +13,7 @@ import frc.robot.Constants;
 import frc.robot.commands.ChangeIntakePos;
 import frc.robot.commands.LiftAdd1Deg;
 import frc.robot.commands.LiftMinus1Deg;
+import frc.robot.commands.RunAutoNavBarrelRacing;
 import frc.robot.commands.RunAutoNavSlalom;
 import frc.robot.commands.SetAgitator;
 import frc.robot.commands.ShiftGears;
@@ -61,7 +62,7 @@ public class RobotContainer {
     return robotContainer;
   }
   public Command getAutonomousCommand() {
-    return new RunAutoNavSlalom(Robot.robotOdemetry, Robot.driveTrain);
+    return new RunAutoNavBarrelRacing(Robot.robotOdemetry, Robot.driveTrain);
   }
   public RobotContainer() {
     // Configure the button bindings

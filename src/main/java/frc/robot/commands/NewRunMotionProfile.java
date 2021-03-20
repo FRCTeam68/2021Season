@@ -303,13 +303,13 @@ public class NewRunMotionProfile extends CommandBase {
         break;
     }
     */
-    kS = 0.602;
-    kV = 0.115;
-    kA = 0.0081;
-    trackWidth = 22.11;
-    maxVelocity = 100;
-    maxAcceleration = 100;
-    maxCentripetalAcceleration = 20;
+    kS = 0.602; //.602
+    kV = 0.115; //.115
+    kA = 0.0081; //.0081
+    trackWidth = 22.11; //22.11
+    maxVelocity = 200; //200
+    maxAcceleration = 200; //200
+    maxCentripetalAcceleration = 70; //70
     // Convert to meters
     kV = Units.metersToInches(kV);
     kA = Units.metersToInches(kA);
