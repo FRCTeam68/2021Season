@@ -31,7 +31,7 @@ public class RunAutoNavSlalom extends SequentialCommandGroup {
   private static final Color markerColor = Color.BLACK;
 
   /** Creates a new RunAutoNavSlalom. */
-  
+  /*
   public RunAutoNavSlalom(RobotOdometry odometry, DriveTrain driveTrain) {
       System.out.println("Attempting to start auton"); // auton actually starts so theres a differing issue
     mp = new NewRunMotionProfile(driveTrain, odometry, 0.0,
@@ -43,9 +43,9 @@ public class RunAutoNavSlalom extends SequentialCommandGroup {
     addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(0, 0, new Rotation2d()))), mp,
         new InstantCommand(() -> driveTrain.stop()));
   }
-  
+  */
   //  /*
-  /*
+  
   public RunAutoNavSlalom(RobotOdometry odometry, DriveTrain driveTrain) {
       System.out.println("Attempting to start auton"); // auton actually starts so theres a differing issue
     mp = new NewRunMotionProfile(driveTrain, odometry, 0.0,
@@ -63,7 +63,7 @@ public class RunAutoNavSlalom extends SequentialCommandGroup {
     addCommands(new InstantCommand(() -> odometry.setPosition(new Pose2d(30, 30, new Rotation2d()))), mp,
         new InstantCommand(() -> driveTrain.stop()));
   }
-  */
+  
 
   
   public static void main(String[] args) {

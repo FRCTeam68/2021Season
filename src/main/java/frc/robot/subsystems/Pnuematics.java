@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
 
 public class Pnuematics extends SubsystemBase {
@@ -31,6 +32,8 @@ public class Pnuematics extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("High Gear", gearMode());
+
   }
 
   public void setShifterHigh() {
@@ -46,10 +49,10 @@ public class Pnuematics extends SubsystemBase {
   public void gearShifter() {
     if (this.getShifter() == Value.kReverse) {
       this.setShiftLow();
-      loworhigh = false;
+      loworhigh = true;
     } else {
       this.setShifterHigh();
-      loworhigh = true;
+      loworhigh = false;
     }
   }
   public void setIntakeIn() {

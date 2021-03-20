@@ -9,6 +9,8 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANPIDController;
+
 import java.util.function.BooleanSupplier;
 
 import frc.robot.Constants;
@@ -30,6 +32,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 //import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 public class DriveTrain extends SubsystemBase {
   /**
    * Creates a new DriveTrain.
@@ -38,6 +41,7 @@ public class DriveTrain extends SubsystemBase {
   private WPI_TalonFX br; //back right
   private WPI_TalonFX bl; //back left
   private WPI_TalonFX fl; //front left\
+  
   
   /*
   private CANCoder leftDriveEnc;
@@ -157,6 +161,8 @@ private AHRS m_gyro = new AHRS();
     SmartDashboard.putNumber("kS", fl.getMotorOutputVoltage());
     //SmartDashboard.putNumber("kV", fl.getMotor)
     SmartDashboard.putNumber("DISTANCE TRAVELED",Robot.driveTrain.getLeftEnc()/(Constants.ENCODER_TICK_LEFT_REVOLUTION/(3.14159*Constants.WHEEL_DIAMETER/12)) + Robot.driveTrain.getRightEnc()/Constants.ENCODER_TICK_RIGHT_REVOLUTION/(3.14159*Constants.WHEEL_DIAMETER/12) / 2.0);
+    SmartDashboard.putNumber("Drive R veloc", rightVelocity());
+    SmartDashboard.putNumber("Drive L veloc", leftVelocity());
 
   }
 
@@ -293,7 +299,7 @@ private AHRS m_gyro = new AHRS();
 
   private double calcActualVelocity(double input, boolean isPercentage) {
     double minVelocity;
-    if (!Robot.pnuematics.gearMode()) {
+    if (Robot.pnuematics.gearMode()) {
       minVelocity = minVelocityLow;
     } else {
       minVelocity = minVelocityHigh;
@@ -313,7 +319,9 @@ private AHRS m_gyro = new AHRS();
       return input;
     }
   }
-
+  public void driveInchesPerSec(int left, int right) {
+    driveInchesPerSec((double) right, (double) left);
+  }
   public void driveInchesPerSec(double left, double right) {
     if (currentControlMode == DriveControlMode.STANDARD_DRIVE) {
       if (driveDisableSwitchAccess) {
@@ -330,8 +338,22 @@ private AHRS m_gyro = new AHRS();
       }
     }
   }
+  
+  
+  public double getRPSRight() {
+    return (double) fr.getSelectedSensorVelocity() / Constants.ENCODER_TICK_RIGHT_REVOLUTION * 10;
+  }
 
-
+  
+  public double getRPSLeft() {
+    return (double) fl.getSelectedSensorVelocity() / Constants.ENCODER_TICK_LEFT_REVOLUTION * 10;
+  }
+  public double getVelocityLeft() {
+    return Constants.WHEEL_DIAMETER * Math.PI * getRPSLeft();
+  }
+  public double getVelocityRight() {
+    return Constants.WHEEL_DIAMETER * Math.PI * getRPSRight();
+  }
 
   private enum DriveControlMode {
     STANDARD_DRIVE, PTO

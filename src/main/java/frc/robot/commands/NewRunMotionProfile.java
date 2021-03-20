@@ -10,8 +10,6 @@ package frc.robot.commands;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
@@ -33,27 +31,25 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.RobotOdometry;
+//import frc.robot.subsystems.drive.DriveTrain;
 import frc.robot.subsystems.DriveTrain;
-//mport frc.robot.subsystems.drive.DriveTrain;
-
 import frckit.tools.pathview.TrajectoryMarker;
 import frckit.tools.pathview.TrajectoryVisualizer;
-
 import frckit.util.GeomUtil;
 
 public class NewRunMotionProfile extends CommandBase {
 
   private static final double kRamseteB = 2; // 0.05 seems to be equivalent to the recommendation for meters
-  private static final double kRamseteZeta = .7; // loosey goosey value
-  private static final double maxVoltage = 10; // WPILib docs suggest less than 12 because of voltage dropp
+  private static final double kRamseteZeta = 0.7;
+  private static final double maxVoltage = 10; // WPILib docs suggest less than 12 because of voltage drop
 
-  private double kS = 0.602; // Volts
-  private double kV = 0.115; // Volt seconds per meter 
-  private double kA = 0.0081; // Volt seconds squared per meter
-  private double trackWidth = 22.11;//21.877 
-  private double maxVelocity = 100;// /s
-  private double maxAcceleration = 100; // /s^2
-  private double maxCentripetalAcceleration = 20; // /s^2
+  private double kS; // Volts
+  private double kV; // Volt seconds per meter
+  private double kA; // Volt seconds squared per meter
+  private double trackWidth;
+  private double maxVelocity; // m/s
+  private double maxAcceleration; // m/s^2
+  private double maxCentripetalAcceleration; // m/s^2
 
   private DriveTrain driveTrain;
   private RobotOdometry odometry;
@@ -73,7 +69,6 @@ public class NewRunMotionProfile extends CommandBase {
   private boolean trajectoryUpdated;
   private boolean followerStarted;
   private RamseteCommand followerCommand;
-  
 
   /**
    * Creates a new RunMotionProfile that starts from a fixed position, using a
@@ -99,7 +94,7 @@ public class NewRunMotionProfile extends CommandBase {
     Pose2d initialPosition = this.waypointPoses.remove(0);
     useQuintic = true;
 
-    // Identical to constructor for fixed position & cubic
+    // Identical to constructor for fixed postion & cubic
     setup(driveTrain, odometry, null, null, Units.inchesToMeters(endVelocity), reversed, false, extraConstraints);
     dynamicTrajectory = false;
     relativeTrajectory = relative;
@@ -273,12 +268,48 @@ public class NewRunMotionProfile extends CommandBase {
   /**
    * Updates constants based on current robot
    */
-  
   @SuppressWarnings("incomplete-switch")
   private void updateConstants() {
 
     // All constants defined in inches
-
+    /*
+    switch (Constants.getRobot()) {
+      case ROBOT_2019:
+        kS = 1.21;
+        kV = 0.0591;
+        kA = 0.0182;
+        trackWidth = 27.5932064868814;
+        maxVelocity = 150;
+        maxAcceleration = 50;
+        maxCentripetalAcceleration = 200;
+        break;
+      case ROBOT_2020_DRIVE:
+        kS = 0.14;
+        kV = 0.0758;
+        kA = 0.0128;
+        trackWidth = 24.890470780033485;
+        maxVelocity = 120;
+        maxAcceleration = 50;
+        maxCentripetalAcceleration = 200;
+        break;
+      case ROBOT_2020:
+        kS = 0.124;
+        kV = 0.0722;
+        kA = 0.00475;
+        trackWidth = 25.934;
+        maxVelocity = 130;
+        maxAcceleration = 130;
+        maxCentripetalAcceleration = 120;
+        break;
+    }
+    */
+    kS = 0.602;
+    kV = 0.115;
+    kA = 0.0081;
+    trackWidth = 22.11;
+    maxVelocity = 100;
+    maxAcceleration = 100;
+    maxCentripetalAcceleration = 20;
     // Convert to meters
     kV = Units.metersToInches(kV);
     kA = Units.metersToInches(kA);
@@ -289,7 +320,7 @@ public class NewRunMotionProfile extends CommandBase {
   }
 
   /**
-   * Sets up a new RunMotionProfile that starts from the robot's current position,u
+   * Sets up a new RunMotionProfile that starts from the robot's current position,
    * using a cubic spline.
    * 
    * @param driveTrain         The drive train
@@ -360,11 +391,10 @@ public class NewRunMotionProfile extends CommandBase {
         Transform2d transform = getCurrentPoseMeters().minus(baseTrajectory.getInitialPose());
         // For this use case, transformBy is correct, not relativeTo
         trajectory = baseTrajectory.transformBy(transform);
-        followerCommand = null;
       }
       startProfile();
     }
-/*
+    /*
     if (Constants.tuningMode && followerStarted) {
       Pose2d pose = getCurrentPoseMeters();
       Pose2d currentPose = trajectory.sample(Timer.getFPGATimestamp() - startTime).poseMeters;
@@ -373,7 +403,8 @@ public class NewRunMotionProfile extends CommandBase {
       SmartDashboard.putNumber("MP/PoseXError", pose.getTranslation().getX() - currentTranslation.getX());
       SmartDashboard.putNumber("MP/PoseYError", pose.getTranslation().getY() - currentTranslation.getY());
       SmartDashboard.putNumber("MP/AngleError", pose.getRotation().minus(currentPose.getRotation()).getDegrees());
-    }*/
+    }
+    */
   }
 
   @Override
@@ -400,7 +431,7 @@ public class NewRunMotionProfile extends CommandBase {
   public void startGeneration() {
     if (dynamicTrajectory) {
       startGeneration(getCurrentPoseMeters(),
-          Units.inchesToMeters((driveTrain.leftVelocity() + driveTrain.rightVelocity()) / 2));
+          Units.inchesToMeters((driveTrain.getVelocityLeft() + driveTrain.getVelocityRight()) / 2));
     }
   }
 
@@ -413,7 +444,6 @@ public class NewRunMotionProfile extends CommandBase {
    */
   private void startGeneration(Pose2d initialPosition, double initialVelocity) {
     trajectory = null;
-    followerCommand = null; // The old command can't be reused if the profile is changed.
     config.setStartVelocity(initialVelocity);
     if (useQuintic) {
       List<Pose2d> fullWaypointPoses = new ArrayList<>();
@@ -431,10 +461,8 @@ public class NewRunMotionProfile extends CommandBase {
    * Start the profile follower command.
    */
   private void startProfile() {
-    if (followerCommand == null) {
-      followerCommand = new RamseteCommand(trajectory, this::getCurrentPoseMeters,
-          new RamseteController(kRamseteB, kRamseteZeta), driveKinematics, this::driveMetersPerSecond);
-    }
+    followerCommand = new RamseteCommand(trajectory, this::getCurrentPoseMeters,
+        new RamseteController(kRamseteB, kRamseteZeta), driveKinematics, this::driveMetersPerSecond);
     followerCommand.schedule();
     followerStarted = true;
     startTime = Timer.getFPGATimestamp();
