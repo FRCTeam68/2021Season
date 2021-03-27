@@ -96,6 +96,7 @@ private AHRS m_gyro = new AHRS();
       encRightTicks = Constants.ENCODER_TICK_RIGHT_REVOLUTION_HIGH;
     } else {
       wheelDiameter = Constants.WHEEL_DIAMETER_LOW;
+      //wheelDiameter = Constants.WHEEL_DIAMETER_LOW_HYPERDRIVE; // ONLY USE THIS WHEN IN HYPERDRive
       encLeftTicks = Constants.ENCODER_TICK_LEFT_REVOLUTION;
       encRightTicks = Constants.ENCODER_TICK_RIGHT_REVOLUTION;
     }
