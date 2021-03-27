@@ -64,7 +64,7 @@ public class RobotContainer {
     return robotContainer;
   }
   public Command getAutonomousCommand() {
-    return new RunAutoNavBounce(Robot.robotOdemetry, Robot.driveTrain, Robot.intake);
+    return new RunAutoNavSlalom(Robot.robotOdemetry, Robot.driveTrain);
   }
   public RobotContainer() {
     // Configure the button bindings

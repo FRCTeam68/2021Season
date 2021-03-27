@@ -6,6 +6,20 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch RunAutoNavSlalom",
+      "request": "launch",
+      "mainClass": "frc.robot.commands.RunAutoNavSlalom",
+      "projectName": "2021Season"
+    },
+    {
+      "type": "java",
+      "name": "Launch RunAutoNavBarrelRacing",
+      "request": "launch",
+      "mainClass": "frc.robot.commands.RunAutoNavBarrelRacing",
+      "projectName": "2021Season"
+    },
+    {
+      "type": "java",
       "name": "Launch RunAutoNavBounce",
       "request": "launch",
       "mainClass": "frc.robot.commands.RunAutoNavBounce",
