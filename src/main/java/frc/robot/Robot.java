@@ -23,7 +23,6 @@ import frc.robot.subsystems.Pnuematics;
 import frc.robot.subsystems.RobotOdometry;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Vision;
-import frc.robot.commands.RunAutonSequence;
 import edu.wpi.first.wpilibj.DriverStation;
 
 //import frc.robot.subsystems.DriveTrainAuton;

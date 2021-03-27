@@ -113,13 +113,7 @@ public final class Constants {
     public static final int ENCODER_TICK_LEFT_REVOLUTION_HIGH = 39834; // -39834      
     public static final int ENCODER_TICK_RIGHT_REVOLUTION_HIGH = 39834; // 39834
     
-    public static final double AUTON_DISTANCE_KP = 0.346;// .08
-    public static final double AUTON_DISTANCE_KI = 0;
-    public static final double AUTON_DISTANCE_KD = 0;
 
-    public static final double AUTON_ANGLE_KP = 0;// SET THESE VALUES
-    public static final double AUTON_ANGLE_KI = 0;
-    public static final double AUTON_ANGLE_KD = 0;
 
     public static final boolean openLoop = false; // was true a second ago this inquires wheter or not the robot is in closed loop or not
 
