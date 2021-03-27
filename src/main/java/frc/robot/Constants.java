@@ -21,6 +21,7 @@ import edu.wpi.first.wpilibj.I2C;
  */
 public final class Constants {
     // Controller Inputs
+    public static final boolean isHighGear = false;
 
     public static final int XBOX_DRIVE = 0;
 
@@ -103,10 +104,14 @@ public final class Constants {
     public static final double DRIVETRAIN_LEFT_SLOT = 0;
 
     // auton
-    public static final double WHEEL_DIAMETER = 6.75; //in inches
+    public static final double WHEEL_DIAMETER_LOW = 7; //in inches
+    public static final double WHEEL_DIAMETER_LOW_HYPERDRIVE = 7;
+    public static final double WHEEL_DIAMETER_HIGH = 6.75;
     public static final double MAX_SPEED = 17;
     public static final int ENCODER_TICK_LEFT_REVOLUTION = 39834; // -39834      
     public static final int ENCODER_TICK_RIGHT_REVOLUTION = 39834; // 39834
+    public static final int ENCODER_TICK_LEFT_REVOLUTION_HIGH = 39834; // -39834      
+    public static final int ENCODER_TICK_RIGHT_REVOLUTION_HIGH = 39834; // 39834
     
     public static final double AUTON_DISTANCE_KP = 0.346;// .08
     public static final double AUTON_DISTANCE_KI = 0;

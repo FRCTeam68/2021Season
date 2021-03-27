@@ -6,6 +6,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Launch RunHyperdriveLightspeedCircuit",
+      "request": "launch",
+      "mainClass": "frc.robot.commands.RunHyperdriveLightspeedCircuit",
+      "projectName": "2021Season"
+    },
+    {
+      "type": "java",
       "name": "Launch RunAutoNavBounce",
       "request": "launch",
       "mainClass": "frc.robot.commands.RunAutoNavBounce",

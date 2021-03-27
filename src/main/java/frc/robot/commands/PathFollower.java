@@ -49,12 +49,11 @@ public class PathFollower extends HelixFollower  {
         // Here we return the PID controller that we're using to correct the distance error through the path
         return distanceController;
     }
-
     @Override
     public double getCurrentDistance() {
         // Here we need to return the overall robot distance traveled in FEET in this example we are averaging 
         // the two sides of the DriveTrain to give is the robot's distance travelled
-        return (Robot.driveTrain.getLeftEnc()/(Constants.ENCODER_TICK_LEFT_REVOLUTION/(3.14159*Constants.WHEEL_DIAMETER/12)) + Robot.driveTrain.getRightEnc()/Constants.ENCODER_TICK_RIGHT_REVOLUTION/(3.14159*Constants.WHEEL_DIAMETER/12)) / 2.0;
+        return (Robot.driveTrain.getLeftEnc()/(Constants.ENCODER_TICK_LEFT_REVOLUTION/(3.14159*Constants.WHEEL_DIAMETER_LOW/12)) + Robot.driveTrain.getRightEnc()/Constants.ENCODER_TICK_RIGHT_REVOLUTION/(3.14159*Constants.WHEEL_DIAMETER_LOW/12)) / 2.0;
     }
 
     @Override

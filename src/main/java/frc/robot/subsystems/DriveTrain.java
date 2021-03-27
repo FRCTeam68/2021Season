@@ -57,6 +57,10 @@ public class DriveTrain extends SubsystemBase {
   private DriveControlMode currentControlMode = DriveControlMode.STANDARD_DRIVE;
   private Boolean driveDisableSwitchAccess;
 
+  private double wheelDiameter;
+  private double encLeftTicks;
+  private double encRightTicks;
+
   protected double maxVelocityLow;
   protected double maxVelocityHigh;
   protected double minVelocityLow;
@@ -85,7 +89,17 @@ private AHRS m_gyro = new AHRS();
     m_gyro = new AHRS(SPI.Port.kMXP);
     //m_gyro.reset();
     driveDisableSwitchAccess = false; //false || it attempted to run im fairly certain this has to be set to false so it falls into close loop
-		
+    
+    if(Constants.isHighGear){
+      wheelDiameter = Constants.WHEEL_DIAMETER_HIGH;
+      encLeftTicks = Constants.ENCODER_TICK_LEFT_REVOLUTION_HIGH;
+      encRightTicks = Constants.ENCODER_TICK_RIGHT_REVOLUTION_HIGH;
+    } else {
+      wheelDiameter = Constants.WHEEL_DIAMETER_LOW;
+      encLeftTicks = Constants.ENCODER_TICK_LEFT_REVOLUTION;
+      encRightTicks = Constants.ENCODER_TICK_RIGHT_REVOLUTION;
+    }
+
     // DriveTrain Motors Config
     fr = new WPI_TalonFX(Constants.TALONFX_FR);
     br = new WPI_TalonFX(Constants.TALONFX_BR);
@@ -148,7 +162,7 @@ private AHRS m_gyro = new AHRS();
   @Override
   public void periodic() {
     CommandScheduler.getInstance().setDefaultCommand(Robot.driveTrain, new DriveWithJoysticks());
-    m_odometry.update(Rotation2d.fromDegrees(getYAW()), Constants.ENCODER_TICK_LEFT_REVOLUTION/(3.14159*Constants.WHEEL_DIAMETER/12), Robot.driveTrain.getRightEnc()/Constants.ENCODER_TICK_RIGHT_REVOLUTION/(3.14159*Constants.WHEEL_DIAMETER/12));
+    m_odometry.update(Rotation2d.fromDegrees(getYAW()), encLeftTicks/(3.14159*wheelDiameter/12), Robot.driveTrain.getRightEnc()/encRightTicks/(3.14159*wheelDiameter/12));
 
     var translation = m_odometry.getPoseMeters().getTranslation();
     m_xEntry.setNumber(translation.getX());
@@ -160,7 +174,7 @@ private AHRS m_gyro = new AHRS();
     //SmartDashboard.putNumber("m_xEntry", m_xEntry);
     SmartDashboard.putNumber("kS", fl.getMotorOutputVoltage());
     //SmartDashboard.putNumber("kV", fl.getMotor)
-    SmartDashboard.putNumber("DISTANCE TRAVELED",Robot.driveTrain.getLeftEnc()/(Constants.ENCODER_TICK_LEFT_REVOLUTION/(3.14159*Constants.WHEEL_DIAMETER/12)) + Robot.driveTrain.getRightEnc()/Constants.ENCODER_TICK_RIGHT_REVOLUTION/(3.14159*Constants.WHEEL_DIAMETER/12) / 2.0);
+    SmartDashboard.putNumber("DISTANCE TRAVELED",Robot.driveTrain.getLeftEnc()/(encLeftTicks/(3.14159*wheelDiameter/12)) + Robot.driveTrain.getRightEnc()/encRightTicks/(3.14159*wheelDiameter/12) / 2.0);
     SmartDashboard.putNumber("Drive R veloc", rightVelocity());
     SmartDashboard.putNumber("Drive L veloc", leftVelocity());
 
@@ -236,12 +250,12 @@ private AHRS m_gyro = new AHRS();
   }
   
   public double getRotationsLeft() {
-    return (double) fl.getSelectedSensorPosition() / Constants.ENCODER_TICK_LEFT_REVOLUTION;
+    return (double) fl.getSelectedSensorPosition() / encLeftTicks;
   }
 
     
   public double getRotationsRight() {
-    return (double) fr.getSelectedSensorPosition() / Constants.ENCODER_TICK_RIGHT_REVOLUTION;
+    return (double) fr.getSelectedSensorPosition() / encRightTicks;
   }
   public double leftVisionAdjusted(){
     double leftSpeed;
@@ -268,7 +282,7 @@ private AHRS m_gyro = new AHRS();
    * @return Distance in inches
    */
   public double getDistanceRight() {
-    return Constants.WHEEL_DIAMETER * Math.PI * getRotationsRight();
+    return wheelDiameter * Math.PI * getRotationsRight();
   }
 
   /**
@@ -278,7 +292,7 @@ private AHRS m_gyro = new AHRS();
    * @return Distance in inches
    */
   public double getDistanceLeft() {
-    return Constants.WHEEL_DIAMETER * Math.PI * getRotationsLeft();
+    return wheelDiameter * Math.PI * getRotationsLeft();
   }
   
   public void driveOpenLoopLowLevel(double left, double right) {
@@ -288,8 +302,8 @@ private AHRS m_gyro = new AHRS();
 
   
   public void driveClosedLoopLowLevel(double left, double right) {
-    fl.set(ControlMode.Velocity, left * Constants.ENCODER_TICK_LEFT_REVOLUTION / 10);
-    fr.set(ControlMode.Velocity, right * Constants.ENCODER_TICK_RIGHT_REVOLUTION / 10);
+    fl.set(ControlMode.Velocity, left * encLeftTicks / 10);
+    fr.set(ControlMode.Velocity, right * encRightTicks / 10);
   }
 
   public void stop(){
@@ -333,26 +347,38 @@ private AHRS m_gyro = new AHRS();
         driveOpenLoopLowLevel(calcActualVelocity(left, false) / Constants.MAX_SPEED,
             calcActualVelocity(right, false) / Constants.MAX_SPEED);
       } else {
-        driveClosedLoopLowLevel((calcActualVelocity(left, false) / (Constants.WHEEL_DIAMETER * Math.PI)),
-            (calcActualVelocity(right, false) / (Constants.WHEEL_DIAMETER * Math.PI)));
+        driveClosedLoopLowLevel((calcActualVelocity(left, false) / (wheelDiameter * Math.PI)),
+            (calcActualVelocity(right, false) / (wheelDiameter * Math.PI)));
       }
     }
   }
   
+  public void coastMode(){
+    fl.setNeutralMode(NeutralMode.Coast);
+    fr.setNeutralMode(NeutralMode.Coast);
+    br.setNeutralMode(NeutralMode.Coast);
+    bl.setNeutralMode(NeutralMode.Coast);
+  }
+  public void breakMode(){
+    fl.setNeutralMode(NeutralMode.Brake);
+    fr.setNeutralMode(NeutralMode.Brake);
+    br.setNeutralMode(NeutralMode.Brake);
+    bl.setNeutralMode(NeutralMode.Brake);
+  }
   
   public double getRPSRight() {
-    return (double) fr.getSelectedSensorVelocity() / Constants.ENCODER_TICK_RIGHT_REVOLUTION * 10;
+    return (double) fr.getSelectedSensorVelocity() / encRightTicks * 10;
   }
 
   
   public double getRPSLeft() {
-    return (double) fl.getSelectedSensorVelocity() / Constants.ENCODER_TICK_LEFT_REVOLUTION * 10;
+    return (double) fl.getSelectedSensorVelocity() / encLeftTicks * 10;
   }
   public double getVelocityLeft() {
-    return Constants.WHEEL_DIAMETER * Math.PI * getRPSLeft();
+    return wheelDiameter * Math.PI * getRPSLeft();
   }
   public double getVelocityRight() {
-    return Constants.WHEEL_DIAMETER * Math.PI * getRPSRight();
+    return wheelDiameter * Math.PI * getRPSRight();
   }
 
   private enum DriveControlMode {

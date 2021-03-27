@@ -89,7 +89,7 @@ public class Robot extends TimedRobot {
 
     driveTrain.resetYaw();
     shooter.zeroEncoders();
-
+    driveTrain.breakMode();
   }
 
   /**
@@ -118,6 +118,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    driveTrain.coastMode();
   }
 
   @Override
@@ -130,10 +131,15 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousInit() {
+    driveTrain.breakMode();
 
     driveTrain.ResetEncoders();
     driveTrain.resetYaw();
+    if(!Constants.isHighGear){
     pnuematics.setShifterHigh();
+    } else{
+      pnuematics.setShiftLow();
+    }
 
     autonomousCommand = m_robotContainer.getAutonomousCommand();
     if (autonomousCommand != null) {
@@ -152,6 +158,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    driveTrain.breakMode();
+
     driveTrain.ResetEncoders();
     shooter.zeroEncoders();
     driveTrain.resetYaw();

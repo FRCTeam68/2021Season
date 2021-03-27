@@ -46,6 +46,7 @@ public class NewRunMotionProfile extends CommandBase {
   private double kS; // Volts
   private double kV; // Volt seconds per meter
   private double kA; // Volt seconds squared per meter
+  
   private double trackWidth;
   private double maxVelocity; // m/s
   private double maxAcceleration; // m/s^2
@@ -271,38 +272,15 @@ public class NewRunMotionProfile extends CommandBase {
   @SuppressWarnings("incomplete-switch")
   private void updateConstants() {
 
-    // All constants defined in inches
-    /*
-    switch (Constants.getRobot()) {
-      case ROBOT_2019:
-        kS = 1.21;
-        kV = 0.0591;
-        kA = 0.0182;
-        trackWidth = 27.5932064868814;
-        maxVelocity = 150;
-        maxAcceleration = 50;
-        maxCentripetalAcceleration = 200;
-        break;
-      case ROBOT_2020_DRIVE:
-        kS = 0.14;
-        kV = 0.0758;
-        kA = 0.0128;
-        trackWidth = 24.890470780033485;
-        maxVelocity = 120;
-        maxAcceleration = 50;
-        maxCentripetalAcceleration = 200;
-        break;
-      case ROBOT_2020:
-        kS = 0.124;
-        kV = 0.0722;
-        kA = 0.00475;
-        trackWidth = 25.934;
-        maxVelocity = 130;
-        maxAcceleration = 130;
-        maxCentripetalAcceleration = 120;
-        break;
-    }
-    */
+   if(Constants.isHighGear){
+    kS = 0.697; //.602
+    kV = 0.0598; //.115
+    kA = 0.00738; //.0081
+    trackWidth = 21.86; //22.11
+    maxVelocity = 200; //200
+    maxAcceleration = 200; //200
+    maxCentripetalAcceleration = 70; //70
+   } else {
     kS = 0.602; //.602
     kV = 0.115; //.115
     kA = 0.0081; //.0081
@@ -310,6 +288,7 @@ public class NewRunMotionProfile extends CommandBase {
     maxVelocity = 200; //200
     maxAcceleration = 200; //200
     maxCentripetalAcceleration = 70; //70
+   }
     // Convert to meters
     kV = Units.metersToInches(kV);
     kA = Units.metersToInches(kA);
