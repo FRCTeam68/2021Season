@@ -64,7 +64,7 @@ public class RobotContainer {
     return robotContainer;
   }
   public Command getAutonomousCommand() {
-    return new RunAutoNavSlalom(Robot.robotOdemetry, Robot.driveTrain);
+    return new RunHyperdriveLightspeedCircuit(Robot.robotOdemetry, Robot.driveTrain);
   }
   public RobotContainer() {
     // Configure the button bindings

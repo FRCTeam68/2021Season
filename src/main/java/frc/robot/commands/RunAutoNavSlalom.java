@@ -50,7 +50,7 @@ public class RunAutoNavSlalom extends SequentialCommandGroup {
       System.out.println("Attempting to start auton"); // auton actually starts so theres a differing issue
     mp = new NewRunMotionProfile(driveTrain, odometry, 0.0,
         List.of(new Pose2d(30.0, 30.0, new Rotation2d()), new Pose2d(90.0, 60.0, Rotation2d.fromDegrees(45.0)),
-            new Pose2d(180.0, 90.0, new Rotation2d()),
+            new Pose2d(140.0, 90.0, new Rotation2d()),
             new CirclePath(new Translation2d(315, 60), 30, Rotation2d.fromDegrees(-160), Rotation2d.fromDegrees(160),
                 false),
             new Pose2d(200.0, 30.0, Rotation2d.fromDegrees(-180.0)),

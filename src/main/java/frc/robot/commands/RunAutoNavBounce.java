@@ -48,9 +48,10 @@ public class RunAutoNavBounce extends SequentialCommandGroup {
             new CirclePath(new Translation2d(150, 60), 30, Rotation2d.fromDegrees(-160), new Rotation2d(), false),
             new Pose2d(180, 140, Rotation2d.fromDegrees(-90))),
         0, true, false);
+        
     mp3 = new NewRunMotionProfile(driveTrain, odometry, 0,
         List.of(new Pose2d(180, 140, Rotation2d.fromDegrees(-90)), new Pose2d(180, 60, Rotation2d.fromDegrees(-90)),
-            new Pose2d(270, 60, Rotation2d.fromDegrees(90)), new Pose2d(270, 140, Rotation2d.fromDegrees(90))),
+            new Pose2d(270, 60, Rotation2d.fromDegrees(90)), new Pose2d(280, 140, Rotation2d.fromDegrees(90))),
         0, false, false);
     mp4 = new NewRunMotionProfile(driveTrain, odometry, 0,
         List.of(new Pose2d(270, 140, Rotation2d.fromDegrees(90)), new Pose2d(300, 90, Rotation2d.fromDegrees(145))),
@@ -63,7 +64,7 @@ public class RunAutoNavBounce extends SequentialCommandGroup {
   public static void main(String[] args) {
   //  Constants.setRobot(RobotType.ROBOT_2020);
     RunAutoNavBounce cmd = new RunAutoNavBounce(null, null, null);
-    cmd.mp4.visualize(80,
+    cmd.mp3.visualize(80,
         List.of(new TrajectoryMarker(new Translation2d(90, 150), markerDiameterCrates, markerColorCrates),
             new TrajectoryMarker(new Translation2d(180, 150), markerDiameterCrates, markerColorCrates),
             new TrajectoryMarker(new Translation2d(270, 150), markerDiameterCrates, markerColorCrates),
