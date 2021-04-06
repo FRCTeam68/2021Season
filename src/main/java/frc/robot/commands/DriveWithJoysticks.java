@@ -32,8 +32,13 @@ public class DriveWithJoysticks extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if(Robot.pnuematics.gearMode()){
     leftStick = -Robot.m_robotContainer.getLeftXboxJoystickValue()*Math.abs(Robot.m_robotContainer.getLeftXboxJoystickValue());
-    rightStick = Robot.m_robotContainer.getRightXboxJoystickValueX()*Math.abs(Robot.m_robotContainer.getRightXboxJoystickValueX())*.5;
+    rightStick = Robot.m_robotContainer.getRightXboxJoystickValueX()*Math.abs(Robot.m_robotContainer.getRightXboxJoystickValueX());
+    } else {
+      leftStick = -Robot.m_robotContainer.getLeftXboxJoystickValue()*Math.abs(Robot.m_robotContainer.getLeftXboxJoystickValue());
+      rightStick = Robot.m_robotContainer.getRightXboxJoystickValueX()*Math.abs(Robot.m_robotContainer.getRightXboxJoystickValueX())*.5;
+    }
     if(rightStick > 0 || leftStick == leftStick){
       rightSpeed = leftStick - rightStick;
       leftSpeed = leftStick + rightStick;
