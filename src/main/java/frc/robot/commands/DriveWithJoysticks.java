@@ -54,7 +54,7 @@ public class DriveWithJoysticks extends CommandBase {
     }
     else{
 
-      DriveTrain.getDriveTrain().setSpeedFalcon(leftSpeed, rightSpeed);  
+      DriveTrain.getDriveTrain().setSpeedFalcon(0.75*leftSpeed, 0.75*rightSpeed);  
       }
   }
 

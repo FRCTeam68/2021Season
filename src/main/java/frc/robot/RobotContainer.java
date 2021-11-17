@@ -10,6 +10,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants;
+import frc.robot.commands.AutonCommand;
+import frc.robot.commands.AutonLock;
+import frc.robot.commands.AutonLockZero;
 import frc.robot.commands.ChangeIntakePos;
 import frc.robot.commands.LiftAdd1Deg;
 import frc.robot.commands.LiftMinus1Deg;
@@ -23,6 +26,7 @@ import frc.robot.commands.ShootMedium;
 import frc.robot.commands.SpinFeeder;
 import frc.robot.commands.Zero;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.RunAutonStraightMeter;
@@ -49,6 +53,7 @@ public class RobotContainer {
   JoystickButton xboxManipCircle;
   JoystickButton xboxManipRS;
   JoystickButton xboxManipSquare;
+  JoystickButton xboxManipTriangle;
   JoystickButton xboxManipLT;
   JoystickButton xboxManipRT;
 
@@ -64,20 +69,23 @@ public class RobotContainer {
     return robotContainer;
   }
   public Command getAutonomousCommand() {
-    return new RunHyperdriveLightspeedCircuit(Robot.robotOdemetry, Robot.driveTrain);
+    return new AutonCommand();
+    //return new RunAutonStraightMeter(Robot.robotOdemetry, Robot.driveTrain);
   }
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    xboxDriveRT.whenPressed(new ShiftGears());
+    //xboxDriveRT.whenPressed(new ShiftGears());
     xboxManipX.whileHeld(new ShootLow());
     xboxManipCircle.whileHeld(new ShootMedium());
+    xboxManipTriangle.whileHeld(new ShootLow());
     xboxManipRS.whenPressed(new ChangeIntakePos());
     xboxManipSquare.whileHeld(new Zero());
     //xboxManipX.whenReleased(new Zero());
     xboxManipCircle.whenReleased(new Zero());
+    xboxManipTriangle.whenReleased(new Zero());
     xboxManipLT.whenPressed(new LiftMinus1Deg());
-    xboxManipRT.whileHeld(new SpinFeeder(.5));
+    xboxManipRT.whileHeld(new SpinFeeder(.75));
     xboxManipRT.whenReleased(new SpinFeeder(0));
 
   }
@@ -97,6 +105,7 @@ public class RobotContainer {
     xboxManipCircle = new JoystickButton(xboxManipulator, Constants.XBOX_MANIPULATE_CIRCLE);
     xboxManipRS = new JoystickButton(xboxManipulator, Constants.XBOX_MANIPULATE_SR);
     xboxManipSquare = new JoystickButton(xboxManipulator, Constants.XBOX_MANIPULATE_SQUARE);
+    xboxManipTriangle = new JoystickButton(xboxManipulator, Constants.XBOX_MANIPULATE_TRIANGLE);
     xboxManipLT = new JoystickButton(xboxManipulator, Constants.XBOX_MANIPULATE_LT);
     xboxManipRT = new JoystickButton(xboxManipulator, Constants.XBOX_MANIPULATE_RT);
     

@@ -139,9 +139,9 @@ public final class Constants {
     public static final double SHOOTER_LOW_TICKS = -10000;
     public static final double SHOOTER_CURVE_SIDE = 1000;
     public static final double SHOOTER_CURVE_OTHER = 200;
-    public static final double SHOOTER_LOW_SPEED_LEFT = 675;
-    public static final double SHOOTER_LOW_SPEED_RIGHT = 220;
-    public static final double SHOOTER_MEDIUM_SPEED_LEFT = -350;
+    public static final double SHOOTER_LOW_SPEED_LEFT = -457.5;
+    public static final double SHOOTER_LOW_SPEED_RIGHT = -357.5;
+    public static final double SHOOTER_MEDIUM_SPEED_LEFT = -550;
     public static final double SHOOTER_MEDIUM_SPEED_RIGHT = -450;
     public static final double SHOOTER_FEEDER_SPEED = .5;
 

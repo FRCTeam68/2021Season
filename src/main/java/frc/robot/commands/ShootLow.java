@@ -15,6 +15,7 @@ public class ShootLow extends CommandBase {
   /**
    * Creates a new ShootLow.
    */
+  private Boolean finished = false;
   public ShootLow() {
     // Use addRequirements() here to declare subsystem dependencies.
     //addRequirements(Robot.shooter);
@@ -28,8 +29,9 @@ public class ShootLow extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Robot.shooter.setShooterAngle(Constants.SHOOTER_LOW_TICKS);
-   // Robot.shooter.setShooterVelocity(Constants.SHOOTER_LOW_SPEED_LEFT,Constants.SHOOTER_LOW_SPEED_RIGHT, Constants.SHOOTER_FEEDER_SPEED);
+    
+   Robot.shooter.setShooterVelocity(Constants.SHOOTER_LOW_SPEED_LEFT,Constants.SHOOTER_LOW_SPEED_RIGHT, Constants.SHOOTER_FEEDER_SPEED);
+   finished = true;
   }
 
   // Called once the command ends or is interrupted.
@@ -40,6 +42,6 @@ public class ShootLow extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return finished;
   }
 }

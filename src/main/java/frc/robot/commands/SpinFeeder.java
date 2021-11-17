@@ -24,7 +24,7 @@ public class SpinFeeder extends CommandBase {
   @Override
   public void execute() {
     Robot.shooter.setFeederSpeed(speed);
-   // Robot.hopper.setAgitatorSpeed(speed, -speed);
+    Robot.hopper.setAgitatorSpeed(speed, -speed);
   }
 
   // Called once the command ends or is interrupted.

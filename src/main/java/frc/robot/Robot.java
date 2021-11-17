@@ -134,12 +134,13 @@ public class Robot extends TimedRobot {
 
     driveTrain.ResetEncoders();
     driveTrain.resetYaw();
+    /*
     if(!Constants.isHighGear){
     pnuematics.setShifterHigh();
     } else{
       pnuematics.setShiftLow();
     }
-
+    */
     autonomousCommand = m_robotContainer.getAutonomousCommand();
     if (autonomousCommand != null) {
       autonomousCommand.schedule();
@@ -153,6 +154,7 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     SmartDashboard.putNumber("HEADING IN RADS", (Robot.driveTrain.getYAW() - 180) * (3.141592654 / 180));
     SmartDashboard.putNumber("HEADING IN DEGS", Robot.driveTrain.getYAW());
+    SmartDashboard.putBoolean("Is high gear", Constants.isHighGear);
   }
 
   @Override
@@ -174,18 +176,19 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
-    SmartDashboard.putNumber("HEADING IN RADS", (Robot.driveTrain.getYAW() - 180) * (3.141592654 / 180));
-    SmartDashboard.putNumber("HEADING IN DEGS", Robot.driveTrain.getYAW());
+    //SmartDashboard.putNumber("HEADING IN RADS", (Robot.driveTrain.getYAW() - 180) * (3.141592654 / 180));
+    //SmartDashboard.putNumber("HEADING IN DEGS", Robot.driveTrain.getYAW());
     SmartDashboard.putBoolean("Target", Robot.vision.getTarget());
-    SmartDashboard.putNumber("Right Enc", Robot.driveTrain.getRightEnc());
-    SmartDashboard.putNumber("Left Enc", Robot.driveTrain.getLeftEnc());
-
+    //SmartDashboard.putNumber("Right Enc", Robot.driveTrain.getRightEnc());
+    //SmartDashboard.putNumber("Left Enc", Robot.driveTrain.getLeftEnc());
+    SmartDashboard.putBoolean("Is high gear", Constants.isHighGear);
+    /*
     if (Robot.m_robotContainer.getXboxDriveRB() == true) {
       SmartDashboard.putNumber("Distance to Target", Robot.vision.calcDistance());
     } else {
       SmartDashboard.putNumber("Distance to Target", 0);
     }
-
+    */
     // SmartDashboard.putNumber("LimelightX", Robot.vision.getXValue());
     // SmartDashboard.putNumber("LimelightY", Robot.vision.getYValue());
     // SmartDashboard.putNumber("LimelightArea", Robot.vision.getArea());
