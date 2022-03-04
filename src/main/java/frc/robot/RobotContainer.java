@@ -10,27 +10,19 @@ package frc.robot;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Constants;
-import frc.robot.commands.AutonCommand;
 import frc.robot.commands.AutonLock;
 import frc.robot.commands.AutonLockZero;
 import frc.robot.commands.ChangeIntakePos;
 import frc.robot.commands.LiftAdd1Deg;
 import frc.robot.commands.LiftMinus1Deg;
-import frc.robot.commands.RunAutoNavBarrelRacing;
-import frc.robot.commands.RunAutoNavBounce;
-import frc.robot.commands.RunAutoNavSlalom;
 import frc.robot.commands.SetAgitator;
 import frc.robot.commands.ShiftGears;
 import frc.robot.commands.ShootLow;
 import frc.robot.commands.ShootMedium;
 import frc.robot.commands.SpinFeeder;
 import frc.robot.commands.Zero;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
-import edu.wpi.first.wpilibj.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.RunAutonStraightMeter;
-import frc.robot.commands.RunHyperdriveLightspeedCircuit;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -69,7 +61,7 @@ public class RobotContainer {
     return robotContainer;
   }
   public Command getAutonomousCommand() {
-    return new AutonCommand();
+    return null;
     //return new RunAutonStraightMeter(Robot.robotOdemetry, Robot.driveTrain);
   }
   public RobotContainer() {
@@ -84,7 +76,7 @@ public class RobotContainer {
     //xboxManipX.whenReleased(new Zero());
     xboxManipCircle.whenReleased(new Zero());
     xboxManipTriangle.whenReleased(new Zero());
-    xboxManipLT.whenPressed(new LiftMinus1Deg());
+    //xboxManipLT.whenPressed(new LiftMinus1Deg());
     xboxManipRT.whileHeld(new SpinFeeder(.75));
     xboxManipRT.whenReleased(new SpinFeeder(0));
 
@@ -114,7 +106,7 @@ public class RobotContainer {
 
   public double getLeftXboxJoystickValue() {
     double leftAxis;
-    leftAxis = xboxDrive.getY(Hand.kLeft);
+    leftAxis = xboxDrive.getLeftY();
 
     // Allow for up to 10% of joystick noises\
     leftAxis = (Math.abs(leftAxis) < 0.1) ? 0 : leftAxis;
@@ -124,7 +116,7 @@ public class RobotContainer {
   // Drivetrain Tank Drive Right
   public double getRightXboxJoystickValue() {
     double rightAxis;
-    rightAxis = xboxDrive.getY(Hand.kRight);
+    rightAxis = xboxDrive.getRightY();
     // Allow for up to 10% of joystick noise
     rightAxis = (Math.abs(rightAxis) < 0.1) ? 0 : rightAxis;
     return rightAxis;
@@ -141,7 +133,7 @@ public class RobotContainer {
 
   public double getLeftXboxManipulatorJoystickValue() {
     double leftAxis;
-    leftAxis = xboxManipulator.getY(Hand.kLeft);
+    leftAxis = xboxManipulator.getLeftY();
     // Allow for up to 10% of joystick noises\
     leftAxis = (Math.abs(leftAxis) < 0.1) ? 0 : leftAxis;
     return leftAxis;
@@ -150,7 +142,7 @@ public class RobotContainer {
   // Drivetrain Tank Drive Right
   public double getRightXboxManipulatorJoystickValue() {
     double rightAxis;
-    rightAxis = xboxManipulator.getY(Hand.kRight);
+    rightAxis = xboxManipulator.getRightY();
     // Allow for up to 10% of joystick noise
     rightAxis = (Math.abs(rightAxis) < 0.1) ? 0 : rightAxis;
     return rightAxis;

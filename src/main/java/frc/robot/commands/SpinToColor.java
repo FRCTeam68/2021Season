@@ -29,7 +29,7 @@ public class SpinToColor extends CommandBase {
   public void execute() {
    /*
     String gameData;
-    gameData = DriverStation.getInstance().getGameSpecificMessage();
+    gameData = DriverStation.getGameSpecificMessage();
     if (gameData.length() > 0) {
       switch (gameData.charAt(0)) {
       case 'B':

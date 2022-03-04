@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,8 +25,8 @@ public class Pnuematics extends SubsystemBase {
   private boolean loworhigh = false; // false = low true = high
   public Pnuematics() {
     //airPump = new Compressor(Constants.AIR_PUMP_CAN);
-    gearShifter = new DoubleSolenoid(Constants.AIR_PUMP_CAN, Constants.DRIVE_SHIFTER_PCM_A, Constants.DRIVE_SHIFTER_PCM_B);
-    intakeMover = new DoubleSolenoid(Constants.AIR_PUMP_CAN, Constants.INTAKE_PCM_B, Constants.INTAKE_PCM_A);
+    gearShifter = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.DRIVE_SHIFTER_PCM_A, Constants.DRIVE_SHIFTER_PCM_B);
+    intakeMover = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.INTAKE_PCM_B, Constants.INTAKE_PCM_A);
     setShiftLow();
   }
 
